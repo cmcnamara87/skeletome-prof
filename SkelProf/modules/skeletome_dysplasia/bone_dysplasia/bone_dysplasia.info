@@ -1,0 +1,14 @@
+; $Id: bone_dysplasia.info $
+
+name = Bone Dysplasia content type
+description = Provides the implementation for the Bone Dysplasia content type.
+package = SKELETOME Dysplasia
+
+core = 7.x
+dependencies[] = node_reference
+dependencies[] = link
+dependencies[] = taxonomy
+dependencies[] = active_tags
+
+files[] = bone_dysplasia.module
+files[] = bone_dysplasia.install

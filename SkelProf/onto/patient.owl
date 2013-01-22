@@ -1,0 +1,231 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE rdf:RDF [
+    <!ENTITY hp "http://purl.org/obo/owl/HP#" >
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY bdo "http://purl.org/skeletome/bonedysplasia#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+    <!ENTITY dc "http://dublincore.org/documents/dcmi-terms/" >
+    <!ENTITY nci "http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#" >
+]>
+
+
+<rdf:RDF xmlns="http://purl.org/skeletome/patient#"
+     xml:base="http://purl.org/skeletome/patient"
+     xmlns:dc="http://dublincore.org/documents/dcmi-terms/"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:hp="http://purl.org/obo/owl/HP#"
+     xmlns:bdo="http://purl.org/skeletome/bonedysplasia#"
+     xmlns:nci="http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <owl:Ontology rdf:about="http://purl.org/skeletome/patient#">
+        <rdfs:label rdf:datatype="&xsd;string">Skeletal Dysplasia Patient Ontology v1.0</rdfs:label>
+        <dc:contributor rdf:datatype="&xsd;string">Andreas Zankl</dc:contributor>
+        <dc:contributor rdf:datatype="&xsd;string">Jane Hunter</dc:contributor>
+        <dc:created rdf:datatype="&xsd;string">January 12, 2011</dc:created>
+        <dc:contributor rdf:datatype="&xsd;string">Razan Paul</dc:contributor>
+        <dc:contributor rdf:datatype="&xsd;string">Tudor Groza</dc:contributor>
+        <dc:contributor rdf:datatype="&xsd;string">Yuan-Fang Li</dc:contributor>
+        <dc:publisher rdf:datatype="&xsd;string">eResearch Lab, School of ITEE, The University of Queensland</dc:publisher>
+        <dc:language rdf:datatype="&xsd;string">en</dc:language>
+        <dc:format rdf:datatype="&xsd;string">rdf/xml</dc:format>
+        <dc:title xml:lang="en">Skeletal Dysplasia Patient Ontology</dc:title>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <owl:AnnotationProperty rdf:about="&dc;format"/>
+    <owl:AnnotationProperty rdf:about="&dc;publisher"/>
+    <owl:AnnotationProperty rdf:about="&rdfs;label"/>
+    <owl:AnnotationProperty rdf:about="&dc;created"/>
+    <owl:AnnotationProperty rdf:about="&dc;title"/>
+    <owl:AnnotationProperty rdf:about="&dc;contributor"/>
+    <owl:AnnotationProperty rdf:about="&dc;creator"/>
+    <owl:AnnotationProperty rdf:about="&dc;language"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://purl.org/skeletome/patient#asserts -->
+
+    <owl:ObjectProperty rdf:about="http://purl.org/skeletome/patient#asserts">
+        <rdfs:label rdf:datatype="&xsd;string">asserts</rdfs:label>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&nci;Procedure"/>
+                    <rdf:Description rdf:about="http://purl.org/skeletome/patient#Observation"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://purl.org/skeletome/patient#carries -->
+
+    <owl:ObjectProperty rdf:about="http://purl.org/skeletome/patient#carries">
+        <rdfs:range rdf:resource="&bdo;Gene_Mutation"/>
+        <rdfs:domain rdf:resource="http://purl.org/skeletome/patient#Patient"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://purl.org/skeletome/patient#exhibits -->
+
+    <owl:ObjectProperty rdf:about="http://purl.org/skeletome/patient#exhibits">
+        <rdfs:label rdf:datatype="&xsd;string">exhibits</rdfs:label>
+        <rdfs:domain rdf:resource="http://purl.org/skeletome/patient#Patient"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&hp;HP_0000118"/>
+                    <rdf:Description rdf:about="&bdo;Phenotypic_Characteristic"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://purl.org/skeletome/patient#has -->
+
+    <owl:ObjectProperty rdf:about="http://purl.org/skeletome/patient#has">
+        <rdfs:label rdf:datatype="&xsd;string">has</rdfs:label>
+        <rdfs:range rdf:resource="&bdo;Bone_Dysplasia"/>
+        <rdfs:domain rdf:resource="http://purl.org/skeletome/patient#Patient"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://purl.org/skeletome/patient#shows -->
+
+    <owl:ObjectProperty rdf:about="http://purl.org/skeletome/patient#shows">
+        <rdfs:domain rdf:resource="http://purl.org/skeletome/patient#Diagnosis"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Genetic_Testing -->
+
+    <owl:Class rdf:about="&nci;Genetic_Testing">
+        <rdfs:label rdf:datatype="&xsd;string">Genetic Testing</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Procedure -->
+
+    <owl:Class rdf:about="&nci;Procedure">
+        <rdfs:label rdf:datatype="&xsd;string">Intervention or Procedure</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Skeletal_Survey_X-Ray -->
+
+    <owl:Class rdf:about="&nci;Skeletal_Survey_X-Ray">
+        <rdfs:label rdf:datatype="&xsd;string">Skeletal Survey X-Ray</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://purl.org/obo/owl/HP#HP_0000118 -->
+
+    <owl:Class rdf:about="&hp;HP_0000118">
+        <rdfs:label rdf:datatype="&xsd;string">Phenotypic abnormality</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://purl.org/skeletome/bonedysplasia#Bone_Dysplasia -->
+
+    <owl:Class rdf:about="&bdo;Bone_Dysplasia">
+        <rdfs:label rdf:datatype="&xsd;string">Bone Dysplasia</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://purl.org/skeletome/bonedysplasia#Gene_Mutation -->
+
+    <owl:Class rdf:about="&bdo;Gene_Mutation">
+        <rdfs:label rdf:datatype="&xsd;string">Gene Mutation</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://purl.org/skeletome/bonedysplasia#Phenotypic_Characteristic -->
+
+    <owl:Class rdf:about="&bdo;Phenotypic_Characteristic">
+        <rdfs:label rdf:datatype="&xsd;string">Phenotypic Characteristic</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://purl.org/skeletome/patient#Diagnosis -->
+
+    <owl:Class rdf:about="http://purl.org/skeletome/patient#Diagnosis">
+        <rdfs:label rdf:datatype="&xsd;string">Diagnosis</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://purl.org/skeletome/patient#Observation -->
+
+    <owl:Class rdf:about="http://purl.org/skeletome/patient#Observation">
+        <rdfs:label rdf:datatype="&xsd;string">Observation</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://purl.org/skeletome/patient#Patient -->
+
+    <owl:Class rdf:about="http://purl.org/skeletome/patient#Patient">
+        <rdfs:label rdf:datatype="&xsd;string">Patient</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.w3.org/2002/07/owl#Thing -->
+
+    <owl:Class rdf:about="&owl;Thing"/>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 3.1.0.20069) http://owlapi.sourceforge.net -->
+

@@ -1,0 +1,183 @@
+http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Mutation_Abnormality
+Mutation Abnormality
+
+Subclasses:
+
+* Bistrand Abasic Site
+- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Bistrand_Abasic_Site
+
+* de novo Mutation
+- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#de_novo_Mutation
+
+* Deleterious Mutation
+- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Deleterious_Mutation
+
+* Deletion Mutation
+- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Deletion_Mutation
+
+** Gene Deletion
+-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Gene_Deletion
+
+==============
+
+* Disease-causing Mutation
+- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Disease-causing_Mutation
+
+* Embryonic Lethal Mutation
+- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Embryonic_Lethal_Mutation
+
+* Founder Mutation
+- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Founder_Mutation
+
+* Frameshift Mutation
+- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Frameshift_Mutation
+
+* Gene Mutation
+- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Gene_Mutation
+
+==============
+
+** 3' Flank Mutation
+-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#_3_Flank_Mutation
+
+*** 3' Untranslated Region Mutation
+--- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#_3_Untranslated_Region_Mutation
+
+** 5' Flank Mutation
+-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#_5_Flank_Mutation
+
+*** 5' Untranslated Region Mutation
+--- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#_5_Untranslated_Region_Mutation
+
+** Cancer Gene Mutation
+-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Cancer_Gene_Mutation
+
+*** Sporadic Breast Tumor Mutation
+--- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Sporadic_Breast_Tumor_Mutation
+
+** Dominant-Negative Mutation
+-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Dominant-Negative_Mutation
+
+** Gene Fusion
+-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Gene_Fusion
+
+** Intronic Mutation
+-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Intronic_Mutation
+
+*** Intron Splice Region Mutation
+--- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Intron_Splice_Region_Mutation
+
+** Splice-Site Mutation
+-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Splice-Site_Mutation
+
+==============
+
+* Germline Mutation
+- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Germline_Mutation
+
+* Germline Mutation Abnormality
+- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Germline_Mutation_Abnormality
+
+* Induced Mutation
+- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Induced_Mutation
+
+** Gene Alteration, Environmentally Produced
+-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Gene_Alteration_Environmentally_Produced
+
+* Insertion Mutation
+- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Insertion_Mutation
+
+* Inversion Mutation Abnormality
+- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Inversion_Mutation_Abnormality
+
+* Multiple Nucleotide Abnormalities
+- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Multiple_Nucleotide_Abnormalities
+
+** Mixed Nucleotide Abnormalities
+-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Mixed_Nucleotide_Abnormalities
+
+** Multiple Transition Abnormalities
+-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Multiple_Transition_Abnormalities
+
+** Multiple Transversion Abnormalities
+-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Multiple_Transversion_Abnormalities
+
+* Novel Mutation
+- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Novel_Mutation
+
+* Null Allele
+- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Null_Allele
+
+* Point Mutation
+- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Point_Mutation
+
+** Inframe Mutation
+-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Inframe_Mutation
+
+** Missense Mutation
+-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Missense_Mutation
+
+** Nonsense Mutation
+-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Nonsense_Mutation
+
+** Silent Mutation
+-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Silent_Mutation
+
+** Transition Mutation
+-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Transition_Mutation
+
+*** Adenosine to Guanosine Transition Abnormality
+--- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Adenosine_to_Guanosine_Transition_Abnormality
+
+*** Cytosine to Thymidine Transition Abnormality
+--- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Cytosine_to_Thymidine_Transition_Abnormality
+
+*** Guanosine to Adenosine Transition Abnormality
+--- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Guanosine_to_Adenosine_Transition_Abnormality
+
+*** Thymidine to Cytosine Transition Abnormality
+--- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Thymidine_to_Cytosine_Transition_Abnormality
+
+** Transversion Mutation
+-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Transversion_Mutation
+
+*** Adenosine to Cytosine Transversion Abnormality
+--- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Adenosine_to_Cytosine_Transversion_Abnormality
+
+*** Adenosine to Thymidine Transversion Abnormality
+--- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Adenosine_to_Thymidine_Transversion_Abnormality
+
+*** Cytosine to Adenosine Transversion Abnormality
+--- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Cytosine_to_Adenosine_Transversion_Abnormality
+
+*** Cytosine to Guanosine Transversion Abnormality
+--- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Cytosine_to_Guanosine_Transversion_Abnormality
+
+*** Guanosine to Cytosine Transversion Abnormality
+--- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Guanosine_to_Cytosine_Transversion_Abnormality
+
+*** Guanosine to Thymidine Transversion Abnormality
+--- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Guanosine_to_Thymidine_Transversion_Abnormality
+
+*** Thymidine to Adenosine Transversion Abnormality
+--- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Thymidine_to_Adenosine_Transversion_Abnormality
+
+*** Thymidine to Guanosine Transversion Abnormality
+--- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Thymidine_to_Guanosine_Transversion_Abnormality
+
+* Restriction Site Polymorphism
+- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Restriction_Site_Polymorphism
+
+* Somatic Mutation
+- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Somatic_Mutation
+
+* Tandem Repeat Variation
+- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Tandem_Repeat_Variation
+
+* Targeted Mutation
+- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Targeted_Mutation
+
+* UV Mutation Abnormality
+- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#UV_Mutation_Abnormality
+
+

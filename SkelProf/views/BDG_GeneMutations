@@ -1,0 +1,186 @@
+$view = new view;
+$view->name = 'bdg_gene_mutations';
+$view->description = '';
+$view->tag = 'default';
+$view->base_table = 'node';
+$view->human_name = 'BDG - Gene Mutations';
+$view->core = 7;
+$view->api_version = '3.0-alpha1';
+$view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+/* Display: Master */
+$handler = $view->new_display('default', 'Master', 'default');
+$handler->display->display_options['title'] = 'BDG - Gene Mutations';
+$handler->display->display_options['access']['type'] = 'perm';
+$handler->display->display_options['cache']['type'] = 'none';
+$handler->display->display_options['query']['type'] = 'views_query';
+$handler->display->display_options['query']['options']['query_comment'] = FALSE;
+$handler->display->display_options['exposed_form']['type'] = 'basic';
+$handler->display->display_options['pager']['type'] = 'none';
+$handler->display->display_options['pager']['options']['offset'] = '0';
+$handler->display->display_options['style_plugin'] = 'table';
+$handler->display->display_options['style_options']['columns'] = array(
+  'title' => 'title',
+  'title_1' => 'title_1',
+  'title_2' => 'title_2',
+);
+$handler->display->display_options['style_options']['default'] = '-1';
+$handler->display->display_options['style_options']['info'] = array(
+  'title' => array(
+    'sortable' => 1,
+    'default_sort_order' => 'asc',
+    'align' => '',
+    'separator' => '',
+  ),
+  'title_1' => array(
+    'sortable' => 1,
+    'default_sort_order' => 'asc',
+    'align' => '',
+    'separator' => '',
+  ),
+  'title_2' => array(
+    'sortable' => 1,
+    'default_sort_order' => 'asc',
+    'align' => '',
+    'separator' => '',
+  ),
+);
+$handler->display->display_options['style_options']['override'] = 1;
+$handler->display->display_options['style_options']['sticky'] = 0;
+$handler->display->display_options['style_options']['empty_table'] = 0;
+/* Relationship: Bone Dysplasias */
+$handler->display->display_options['relationships']['field_bdgroup_bonedysplasia_nid']['id'] = 'field_bdgroup_bonedysplasia_nid';
+$handler->display->display_options['relationships']['field_bdgroup_bonedysplasia_nid']['table'] = 'field_data_field_bdgroup_bonedysplasia';
+$handler->display->display_options['relationships']['field_bdgroup_bonedysplasia_nid']['field'] = 'field_bdgroup_bonedysplasia_nid';
+$handler->display->display_options['relationships']['field_bdgroup_bonedysplasia_nid']['ui_name'] = 'Bone Dysplasias';
+$handler->display->display_options['relationships']['field_bdgroup_bonedysplasia_nid']['required'] = 1;
+$handler->display->display_options['relationships']['field_bdgroup_bonedysplasia_nid']['delta'] = '-1';
+/* Relationship: Gene Mutations */
+$handler->display->display_options['relationships']['field_bd_gm_nid']['id'] = 'field_bd_gm_nid';
+$handler->display->display_options['relationships']['field_bd_gm_nid']['table'] = 'field_data_field_bd_gm';
+$handler->display->display_options['relationships']['field_bd_gm_nid']['field'] = 'field_bd_gm_nid';
+$handler->display->display_options['relationships']['field_bd_gm_nid']['relationship'] = 'field_bdgroup_bonedysplasia_nid';
+$handler->display->display_options['relationships']['field_bd_gm_nid']['ui_name'] = 'Gene Mutations';
+$handler->display->display_options['relationships']['field_bd_gm_nid']['required'] = 1;
+$handler->display->display_options['relationships']['field_bd_gm_nid']['delta'] = '-1';
+/* Relationship: Mutation type */
+$handler->display->display_options['relationships']['field_gm_mutation_type_nid']['id'] = 'field_gm_mutation_type_nid';
+$handler->display->display_options['relationships']['field_gm_mutation_type_nid']['table'] = 'field_data_field_gm_mutation_type';
+$handler->display->display_options['relationships']['field_gm_mutation_type_nid']['field'] = 'field_gm_mutation_type_nid';
+$handler->display->display_options['relationships']['field_gm_mutation_type_nid']['relationship'] = 'field_bd_gm_nid';
+$handler->display->display_options['relationships']['field_gm_mutation_type_nid']['ui_name'] = 'Mutation type';
+$handler->display->display_options['relationships']['field_gm_mutation_type_nid']['required'] = 0;
+$handler->display->display_options['relationships']['field_gm_mutation_type_nid']['delta'] = '-1';
+/* Relationship: Gene */
+$handler->display->display_options['relationships']['field_gene_mutation_gene_nid']['id'] = 'field_gene_mutation_gene_nid';
+$handler->display->display_options['relationships']['field_gene_mutation_gene_nid']['table'] = 'field_data_field_gene_mutation_gene';
+$handler->display->display_options['relationships']['field_gene_mutation_gene_nid']['field'] = 'field_gene_mutation_gene_nid';
+$handler->display->display_options['relationships']['field_gene_mutation_gene_nid']['relationship'] = 'field_bd_gm_nid';
+$handler->display->display_options['relationships']['field_gene_mutation_gene_nid']['ui_name'] = 'Gene';
+$handler->display->display_options['relationships']['field_gene_mutation_gene_nid']['required'] = 1;
+$handler->display->display_options['relationships']['field_gene_mutation_gene_nid']['delta'] = '-1';
+/* Field: Content: Title */
+$handler->display->display_options['fields']['title']['id'] = 'title';
+$handler->display->display_options['fields']['title']['table'] = 'node';
+$handler->display->display_options['fields']['title']['field'] = 'title';
+$handler->display->display_options['fields']['title']['relationship'] = 'field_bd_gm_nid';
+$handler->display->display_options['fields']['title']['alter']['alter_text'] = 0;
+$handler->display->display_options['fields']['title']['alter']['make_link'] = 0;
+$handler->display->display_options['fields']['title']['alter']['absolute'] = 0;
+$handler->display->display_options['fields']['title']['alter']['external'] = 0;
+$handler->display->display_options['fields']['title']['alter']['replace_spaces'] = 0;
+$handler->display->display_options['fields']['title']['alter']['trim_whitespace'] = 0;
+$handler->display->display_options['fields']['title']['alter']['nl2br'] = 0;
+$handler->display->display_options['fields']['title']['alter']['word_boundary'] = 1;
+$handler->display->display_options['fields']['title']['alter']['ellipsis'] = 1;
+$handler->display->display_options['fields']['title']['alter']['strip_tags'] = 0;
+$handler->display->display_options['fields']['title']['alter']['trim'] = 0;
+$handler->display->display_options['fields']['title']['alter']['html'] = 0;
+$handler->display->display_options['fields']['title']['element_label_colon'] = 0;
+$handler->display->display_options['fields']['title']['element_default_classes'] = 1;
+$handler->display->display_options['fields']['title']['hide_empty'] = 0;
+$handler->display->display_options['fields']['title']['empty_zero'] = 0;
+$handler->display->display_options['fields']['title']['hide_alter_empty'] = 0;
+$handler->display->display_options['fields']['title']['link_to_node'] = 1;
+/* Field: Content: Title */
+$handler->display->display_options['fields']['title_1']['id'] = 'title_1';
+$handler->display->display_options['fields']['title_1']['table'] = 'node';
+$handler->display->display_options['fields']['title_1']['field'] = 'title';
+$handler->display->display_options['fields']['title_1']['relationship'] = 'field_gm_mutation_type_nid';
+$handler->display->display_options['fields']['title_1']['label'] = 'Mutation type';
+$handler->display->display_options['fields']['title_1']['alter']['alter_text'] = 0;
+$handler->display->display_options['fields']['title_1']['alter']['make_link'] = 0;
+$handler->display->display_options['fields']['title_1']['alter']['absolute'] = 0;
+$handler->display->display_options['fields']['title_1']['alter']['external'] = 0;
+$handler->display->display_options['fields']['title_1']['alter']['replace_spaces'] = 0;
+$handler->display->display_options['fields']['title_1']['alter']['trim_whitespace'] = 0;
+$handler->display->display_options['fields']['title_1']['alter']['nl2br'] = 0;
+$handler->display->display_options['fields']['title_1']['alter']['word_boundary'] = 1;
+$handler->display->display_options['fields']['title_1']['alter']['ellipsis'] = 1;
+$handler->display->display_options['fields']['title_1']['alter']['strip_tags'] = 0;
+$handler->display->display_options['fields']['title_1']['alter']['trim'] = 0;
+$handler->display->display_options['fields']['title_1']['alter']['html'] = 0;
+$handler->display->display_options['fields']['title_1']['element_label_colon'] = 0;
+$handler->display->display_options['fields']['title_1']['element_default_classes'] = 1;
+$handler->display->display_options['fields']['title_1']['hide_empty'] = 0;
+$handler->display->display_options['fields']['title_1']['empty_zero'] = 0;
+$handler->display->display_options['fields']['title_1']['hide_alter_empty'] = 0;
+$handler->display->display_options['fields']['title_1']['link_to_node'] = 1;
+/* Field: Content: Title */
+$handler->display->display_options['fields']['title_2']['id'] = 'title_2';
+$handler->display->display_options['fields']['title_2']['table'] = 'node';
+$handler->display->display_options['fields']['title_2']['field'] = 'title';
+$handler->display->display_options['fields']['title_2']['relationship'] = 'field_gene_mutation_gene_nid';
+$handler->display->display_options['fields']['title_2']['label'] = 'Gene';
+$handler->display->display_options['fields']['title_2']['alter']['alter_text'] = 0;
+$handler->display->display_options['fields']['title_2']['alter']['make_link'] = 0;
+$handler->display->display_options['fields']['title_2']['alter']['absolute'] = 0;
+$handler->display->display_options['fields']['title_2']['alter']['external'] = 0;
+$handler->display->display_options['fields']['title_2']['alter']['replace_spaces'] = 0;
+$handler->display->display_options['fields']['title_2']['alter']['trim_whitespace'] = 0;
+$handler->display->display_options['fields']['title_2']['alter']['nl2br'] = 0;
+$handler->display->display_options['fields']['title_2']['alter']['word_boundary'] = 1;
+$handler->display->display_options['fields']['title_2']['alter']['ellipsis'] = 1;
+$handler->display->display_options['fields']['title_2']['alter']['strip_tags'] = 0;
+$handler->display->display_options['fields']['title_2']['alter']['trim'] = 0;
+$handler->display->display_options['fields']['title_2']['alter']['html'] = 0;
+$handler->display->display_options['fields']['title_2']['element_label_colon'] = 0;
+$handler->display->display_options['fields']['title_2']['element_default_classes'] = 1;
+$handler->display->display_options['fields']['title_2']['hide_empty'] = 0;
+$handler->display->display_options['fields']['title_2']['empty_zero'] = 0;
+$handler->display->display_options['fields']['title_2']['hide_alter_empty'] = 0;
+$handler->display->display_options['fields']['title_2']['link_to_node'] = 1;
+/* Sort criterion: Content: Post date */
+$handler->display->display_options['sorts']['created']['id'] = 'created';
+$handler->display->display_options['sorts']['created']['table'] = 'node';
+$handler->display->display_options['sorts']['created']['field'] = 'created';
+$handler->display->display_options['sorts']['created']['order'] = 'DESC';
+/* Contextual filter: Content: Nid */
+$handler->display->display_options['arguments']['nid']['id'] = 'nid';
+$handler->display->display_options['arguments']['nid']['table'] = 'node';
+$handler->display->display_options['arguments']['nid']['field'] = 'nid';
+$handler->display->display_options['arguments']['nid']['default_action'] = 'default';
+$handler->display->display_options['arguments']['nid']['default_argument_type'] = 'node';
+$handler->display->display_options['arguments']['nid']['default_argument_skip_url'] = 0;
+$handler->display->display_options['arguments']['nid']['summary']['number_of_records'] = '0';
+$handler->display->display_options['arguments']['nid']['summary']['format'] = 'default_summary';
+$handler->display->display_options['arguments']['nid']['summary_options']['items_per_page'] = '25';
+$handler->display->display_options['arguments']['nid']['break_phrase'] = 0;
+$handler->display->display_options['arguments']['nid']['not'] = 0;
+/* Filter criterion: Content: Published */
+$handler->display->display_options['filters']['status']['id'] = 'status';
+$handler->display->display_options['filters']['status']['table'] = 'node';
+$handler->display->display_options['filters']['status']['field'] = 'status';
+$handler->display->display_options['filters']['status']['value'] = 1;
+$handler->display->display_options['filters']['status']['group'] = 0;
+$handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+/* Filter criterion: Content: Type */
+$handler->display->display_options['filters']['type']['id'] = 'type';
+$handler->display->display_options['filters']['type']['table'] = 'node';
+$handler->display->display_options['filters']['type']['field'] = 'type';
+$handler->display->display_options['filters']['type']['value'] = array(
+  'bone_dysplasia_group' => 'bone_dysplasia_group',
+);
+
+/* Display: Block */
+$handler = $view->new_display('block', 'Block', 'bdg_gm_block');

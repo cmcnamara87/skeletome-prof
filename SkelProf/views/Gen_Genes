@@ -1,0 +1,158 @@
+$view = new view;
+$view->name = 'genes_list';
+$view->description = '';
+$view->tag = '';
+$view->base_table = 'node';
+$view->human_name = 'Genes list';
+$view->core = 7;
+$view->api_version = '3.0-alpha1';
+$view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+/* Display: Defaults */
+$handler = $view->new_display('default', 'Defaults', 'default');
+$handler->display->display_options['title'] = 'Genes';
+$handler->display->display_options['access']['type'] = 'none';
+$handler->display->display_options['cache']['type'] = 'none';
+$handler->display->display_options['query']['type'] = 'views_query';
+$handler->display->display_options['query']['options']['query_comment'] = FALSE;
+$handler->display->display_options['exposed_form']['type'] = 'basic';
+$handler->display->display_options['pager']['type'] = 'none';
+$handler->display->display_options['pager']['options']['offset'] = '0';
+$handler->display->display_options['style_plugin'] = 'table';
+$handler->display->display_options['style_options']['columns'] = array(
+  'title' => 'title',
+  'entity_id' => 'entity_id',
+  'entity_id_1' => 'entity_id_1',
+  'entity_id_2' => 'entity_id_2',
+  'entity_id_3' => 'entity_id_3',
+);
+$handler->display->display_options['style_options']['default'] = 'title';
+$handler->display->display_options['style_options']['info'] = array(
+  'title' => array(
+    'sortable' => 0,
+    'default_sort_order' => 'asc',
+    'align' => 'views-align-left',
+    'separator' => '',
+  ),
+  'entity_id' => array(
+    'sortable' => 0,
+    'default_sort_order' => 'asc',
+    'align' => '',
+    'separator' => '',
+  ),
+  'entity_id_1' => array(
+    'sortable' => 0,
+    'default_sort_order' => 'asc',
+    'align' => '',
+    'separator' => '',
+  ),
+  'entity_id_2' => array(
+    'sortable' => 0,
+    'default_sort_order' => 'asc',
+    'align' => '',
+    'separator' => '',
+  ),
+  'entity_id_3' => array(
+    'sortable' => 0,
+    'default_sort_order' => 'asc',
+    'align' => '',
+    'separator' => '',
+  ),
+);
+$handler->display->display_options['style_options']['override'] = 1;
+$handler->display->display_options['style_options']['sticky'] = 0;
+/* Field: Content: Title */
+$handler->display->display_options['fields']['title']['id'] = 'title';
+$handler->display->display_options['fields']['title']['table'] = 'node';
+$handler->display->display_options['fields']['title']['field'] = 'title';
+$handler->display->display_options['fields']['title']['label'] = 'Gene name';
+$handler->display->display_options['fields']['title']['alter']['alter_text'] = 0;
+$handler->display->display_options['fields']['title']['alter']['make_link'] = 0;
+$handler->display->display_options['fields']['title']['alter']['absolute'] = 0;
+$handler->display->display_options['fields']['title']['alter']['word_boundary'] = 1;
+$handler->display->display_options['fields']['title']['alter']['ellipsis'] = 1;
+$handler->display->display_options['fields']['title']['alter']['strip_tags'] = 0;
+$handler->display->display_options['fields']['title']['alter']['trim'] = 0;
+$handler->display->display_options['fields']['title']['alter']['html'] = 0;
+$handler->display->display_options['fields']['title']['element_label_colon'] = 1;
+$handler->display->display_options['fields']['title']['element_default_classes'] = 1;
+$handler->display->display_options['fields']['title']['hide_empty'] = 0;
+$handler->display->display_options['fields']['title']['empty_zero'] = 0;
+$handler->display->display_options['fields']['title']['link_to_node'] = 1;
+/* Field: Content: Locus */
+$handler->display->display_options['fields']['entity_id']['id'] = 'entity_id';
+$handler->display->display_options['fields']['entity_id']['table'] = 'field_data_field_gene_locus';
+$handler->display->display_options['fields']['entity_id']['field'] = 'field_gene_locus';
+$handler->display->display_options['fields']['entity_id']['alter']['alter_text'] = 0;
+$handler->display->display_options['fields']['entity_id']['alter']['make_link'] = 0;
+$handler->display->display_options['fields']['entity_id']['alter']['absolute'] = 0;
+$handler->display->display_options['fields']['entity_id']['alter']['word_boundary'] = 1;
+$handler->display->display_options['fields']['entity_id']['alter']['ellipsis'] = 1;
+$handler->display->display_options['fields']['entity_id']['alter']['strip_tags'] = 0;
+$handler->display->display_options['fields']['entity_id']['alter']['trim'] = 0;
+$handler->display->display_options['fields']['entity_id']['alter']['html'] = 0;
+$handler->display->display_options['fields']['entity_id']['element_label_colon'] = 1;
+$handler->display->display_options['fields']['entity_id']['element_default_classes'] = 1;
+$handler->display->display_options['fields']['entity_id']['hide_empty'] = 1;
+$handler->display->display_options['fields']['entity_id']['empty_zero'] = 0;
+/* Field: Content: OMIM */
+$handler->display->display_options['fields']['entity_id_1']['id'] = 'entity_id_1';
+$handler->display->display_options['fields']['entity_id_1']['table'] = 'field_data_field_gene_omim';
+$handler->display->display_options['fields']['entity_id_1']['field'] = 'field_gene_omim';
+$handler->display->display_options['fields']['entity_id_1']['alter']['alter_text'] = 0;
+$handler->display->display_options['fields']['entity_id_1']['alter']['make_link'] = 1;
+$handler->display->display_options['fields']['entity_id_1']['alter']['path'] = 'http://omim.org/entry/[entity_id_1]';
+$handler->display->display_options['fields']['entity_id_1']['alter']['absolute'] = 1;
+$handler->display->display_options['fields']['entity_id_1']['alter']['word_boundary'] = 1;
+$handler->display->display_options['fields']['entity_id_1']['alter']['ellipsis'] = 1;
+$handler->display->display_options['fields']['entity_id_1']['alter']['strip_tags'] = 0;
+$handler->display->display_options['fields']['entity_id_1']['alter']['trim'] = 0;
+$handler->display->display_options['fields']['entity_id_1']['alter']['html'] = 0;
+$handler->display->display_options['fields']['entity_id_1']['element_label_colon'] = 1;
+$handler->display->display_options['fields']['entity_id_1']['element_default_classes'] = 1;
+$handler->display->display_options['fields']['entity_id_1']['hide_empty'] = 1;
+$handler->display->display_options['fields']['entity_id_1']['empty_zero'] = 0;
+/* Field: Content: UMLS CUI */
+$handler->display->display_options['fields']['entity_id_2']['id'] = 'entity_id_2';
+$handler->display->display_options['fields']['entity_id_2']['table'] = 'field_data_field_gene_umlscui';
+$handler->display->display_options['fields']['entity_id_2']['field'] = 'field_gene_umlscui';
+$handler->display->display_options['fields']['entity_id_2']['alter']['alter_text'] = 0;
+$handler->display->display_options['fields']['entity_id_2']['alter']['make_link'] = 0;
+$handler->display->display_options['fields']['entity_id_2']['alter']['absolute'] = 0;
+$handler->display->display_options['fields']['entity_id_2']['alter']['word_boundary'] = 1;
+$handler->display->display_options['fields']['entity_id_2']['alter']['ellipsis'] = 1;
+$handler->display->display_options['fields']['entity_id_2']['alter']['strip_tags'] = 0;
+$handler->display->display_options['fields']['entity_id_2']['alter']['trim'] = 0;
+$handler->display->display_options['fields']['entity_id_2']['alter']['html'] = 0;
+$handler->display->display_options['fields']['entity_id_2']['element_label_colon'] = 1;
+$handler->display->display_options['fields']['entity_id_2']['element_default_classes'] = 1;
+$handler->display->display_options['fields']['entity_id_2']['hide_empty'] = 1;
+$handler->display->display_options['fields']['entity_id_2']['empty_zero'] = 0;
+/* Field: Content: Uniprot ID */
+$handler->display->display_options['fields']['entity_id_3']['id'] = 'entity_id_3';
+$handler->display->display_options['fields']['entity_id_3']['table'] = 'field_data_field_gene_uniprot';
+$handler->display->display_options['fields']['entity_id_3']['field'] = 'field_gene_uniprot';
+$handler->display->display_options['fields']['entity_id_3']['alter']['alter_text'] = 0;
+$handler->display->display_options['fields']['entity_id_3']['alter']['make_link'] = 1;
+$handler->display->display_options['fields']['entity_id_3']['alter']['path'] = 'http://www.uniprot.org/uniprot/[entity_id_3]';
+$handler->display->display_options['fields']['entity_id_3']['alter']['absolute'] = 1;
+$handler->display->display_options['fields']['entity_id_3']['alter']['word_boundary'] = 1;
+$handler->display->display_options['fields']['entity_id_3']['alter']['ellipsis'] = 1;
+$handler->display->display_options['fields']['entity_id_3']['alter']['strip_tags'] = 0;
+$handler->display->display_options['fields']['entity_id_3']['alter']['trim'] = 0;
+$handler->display->display_options['fields']['entity_id_3']['alter']['html'] = 0;
+$handler->display->display_options['fields']['entity_id_3']['element_label_colon'] = 1;
+$handler->display->display_options['fields']['entity_id_3']['element_default_classes'] = 1;
+$handler->display->display_options['fields']['entity_id_3']['hide_empty'] = 1;
+$handler->display->display_options['fields']['entity_id_3']['empty_zero'] = 0;
+/* Filter criterion: Content: Type */
+$handler->display->display_options['filters']['type']['id'] = 'type';
+$handler->display->display_options['filters']['type']['table'] = 'node';
+$handler->display->display_options['filters']['type']['field'] = 'type';
+$handler->display->display_options['filters']['type']['value'] = array(
+  'gene' => 'gene',
+);
+
+/* Display: Page */
+$handler = $view->new_display('page', 'Page', 'page_1');
+$handler->display->display_options['path'] = 'genes';

@@ -1,0 +1,42 @@
+
+>> Achondroplasia
+Short limb dwarfism (http://purl.org/obo/owl/HP#HP_0003505)
+Hydrocephalus (http://purl.org/obo/owl/HP#HP_0000238)
+Lumbar hyperlordosis (http://purl.org/obo/owl/HP#HP_0002938)
+Bowing of the legs (http://purl.org/obo/owl/HP#HP_0002979)
+
+>> Osteogenesis Imperfecta type I
+Blue sclerae (http://purl.org/obo/owl/HP#HP_0000592)
+Recurrent fractures (http://purl.org/obo/owl/HP#HP_0002757)
+Progressive sensorineural hearing impairment (http://purl.org/obo/owl/HP#HP_0000408)
+
+>> Stickler syndrome
+Pierre-Robin sequence (http://purl.org/obo/owl/HP#HP_0000201)
+Cleft palate (http://purl.org/obo/owl/HP#HP_0000175)
+Myopia (http://purl.org/obo/owl/HP#HP_0000545)
+Malar hypoplasia (http://purl.org/obo/owl/HP#HP_0000272)
+
+>> MED
+Hip osteoarthritis (http://purl.org/obo/owl/HP#HP_0008843)
+Mild to moderate short stature (http://purl.org/obo/owl/HP#HP_0003503)
+Joint stiffness (http://purl.org/obo/owl/HP#HP_0001387)
+
+>> Diastrophic Dysplasia
+Short limb dwarfism (http://purl.org/obo/owl/HP#HP_0003505)
+Cleft palate (http://purl.org/obo/owl/HP#HP_0000175)
+Hitchhiker thumb (http://purl.org/obo/owl/HP#HP_0001234)
+
+>> Thanatophoric Dysplasia Type I
+Cloverleaf skull (http://purl.org/obo/owl/HP#HP_0002676)
+Bowing of the legs (http://purl.org/obo/owl/HP#HP_0002979)
+Lethal micromelic dwarfism (http://purl.org/obo/owl/HP#HP_0003506)
+
+>>Achondrogenesis type 1B
+Marked micromelic dwarfism (http://purl.org/obo/owl/HP#HP_0003509)
+Stillborn or death shortly after birth (http://purl.org/obo/owl/HP#HP_0001625)
+Edema (http://purl.org/obo/owl/HP#HP_0000969)
+
+>> Campomelic dysplasia
+Femoral bowing (http://purl.org/obo/owl/HP#HP_0002980)
+Ambiguous genitalia (http://purl.org/obo/owl/HP#HP_0000062)
+Cleft palate (http://purl.org/obo/owl/HP#HP_0000175)

@@ -1,0 +1,257 @@
+<?php
+// $Id: skeletome_config.module $
+
+define('_IMPORT_VIEWS_', 'edit-configuration-import-views');
+define('_IMPORT_CONTENT_', 'edit-configuration-import-content');
+define('_IMPORT_TEXT_', 'edit-configuration-import-text');
+define('_DELETE_CONTENT_', 'edit-configuration-delete-content');
+
+function skeletome_config_init() {
+  module_load_include('inc', 'skeletome_config', 'includes/import_views');
+  module_load_include('inc', 'skeletome_config', 'includes/import_content');
+  module_load_include('inc', 'skeletome_config', 'includes/import_desc');
+  module_load_include('inc', 'skeletome_config', 'includes/delete_content');
+}
+
+function skeletome_config_menu() {
+  $items['admin/config/system/skeletome_configuration'] = array(
+    'title' => 'SKELETOME Configuration',
+    'description' => 'Configuration of the SKELETOME content.',
+    'page callback' => 'skeletome_config_page',
+    'access arguments' => array('administer content'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  return $items;
+}
+
+function skeletome_config_page() {
+  return drupal_get_form('skeletome_config_form');
+}
+
+function skeletome_config_form() {
+  $form['#attributes'] = array('enctype' => "multipart/form-data");
+
+  $form['configuration'] = array(
+    '#type' => 'vertical_tabs',
+    '#title' => t('Configuration'),
+    '#collapsible' => TRUE,
+    '#collapsed' => FALSE,
+    '#tree' => TRUE,
+  );
+
+  $form['configuration']['import_views'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Import views'),
+    '#weight' => 1,
+    '#collapsible' => TRUE,
+    '#collapsed' => FALSE,
+    '#tree' => TRUE,
+    'value' => import_views_form(),
+  );
+
+  $form['configuration']['import_content'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Import content'),
+    '#weight' => 2,
+    '#collapsible' => TRUE,
+    '#collapsed' => FALSE,
+    '#tree' => TRUE,
+    'value' => import_content_form(),
+  );
+
+  $form['configuration']['import_text'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Import descriptions'),
+    '#weight' => 3,
+    '#collapsible' => TRUE,
+    '#collapsed' => FALSE,
+    '#tree' => TRUE,
+    'value' => import_descriptions_form(),
+  );
+
+  $form['configuration']['delete_content'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Clear content'),
+    '#weight' => 4,
+    '#collapsible' => TRUE,
+    '#collapsed' => FALSE,
+    '#tree' => TRUE,
+    'value' => delete_content_form(),
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => 'Submit',
+  );
+
+  return $form;
+}
+
+function import_views_form() {
+  $views_location_form = array();
+  $views_location_form['#attributes'] = array('enctype' => "multipart/form-data");
+
+  $views_location_form['view_file'] = array(
+    '#type' => 'textfield',
+    '#title' => t('View file'),
+    '#description' => t('Input the view file to be imported.'),
+  );
+
+  $options = array();
+  $options['-1'] = '- Select -';
+  $options['sidebar_first'] = 'Sidebar';
+  $options['content'] = 'Main content';
+
+  $views_location_form['region'] = array(
+    '#type' => 'select',
+    '#title' => t('Region'),
+    '#description' => t("Choose the region where the view's block will be placed."),
+    '#options' => $options,
+  );
+
+  $options = array();
+  $options['-1'] = '- Select -';
+  $sql = 'SELECT type, name FROM {node_type}';
+  $result = db_query($sql, array());
+  foreach ($result as $row) {
+    $options[$row->type] = $row->name;
+  }
+
+  $views_location_form['content_type'] = array(
+    '#type' => 'select',
+    '#title' => t('Content type'),
+    '#description' => t('Choose the content type to which the presence of the block will be restricted.'),
+    '#options' => $options,
+  );
+
+  $options = array();
+  $options['-1'] = '- Select -';
+  $options['0'] = 'Authenticated users';
+
+  $views_location_form['user_restriction'] = array(
+    '#type' => 'select',
+    '#title' => t('Users'),
+    '#description' => t('Choose the user restrictions to be applied on the block.'),
+    '#options' => $options,
+  );
+
+  return $views_location_form;
+}
+
+function import_content_form() {
+  $content_form = array();
+  $content_form['#attributes'] = array('enctype' => "multipart/form-data");
+
+  $content_form['content_file'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Ontology file'),
+    '#description' => t('Input the ontology file to be used for content import.'),
+  );
+
+  $options = array();
+  $options['-1'] = '- Select -';
+  $options['0'] = 'Gene mutation types';
+  $options['1'] = 'Genes and gene mutations';
+  $options['2'] = 'Bone Dysplasias';
+
+  $content_form['content_import'] = array(
+    '#type' => 'select',
+    '#title' => t('Content type'),
+    '#description' => t("Choose the type of content to be imported."),
+    '#options' => $options,
+  );
+
+  return $content_form;
+}
+
+function import_descriptions_form() {
+  $desc_form = array();
+
+  $desc_form['desc_folder'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Descriptions folder'),
+    '#description' => t('Input the descriptions folder to be used for import.'),
+  );
+
+  return $desc_form;
+}
+
+function delete_content_form() {
+  $delete_form = array();
+
+  $options = array();
+  $options['-1'] = '- Select -';
+  $options['0'] = 'Bone Dysplasias';
+  $options['1'] = 'Genes and gene mutations';
+  $options['2'] = 'Gene mutation types';
+  $options['3'] = 'Everything';
+  $options['4'] = 'Mode of inheritance vocabulary';
+  $options['5'] = 'SKELETOME vocabulary';
+
+  $delete_form['to_delete'] = array(
+    '#type' => 'select',
+    '#title' => t('Clear ...'),
+    '#description' => t('Choose the type of data to be cleared.'),
+    '#options' => $options,
+  );
+
+  return $delete_form;
+}
+
+function skeletome_config_form_submit($form, &$form_state) {
+  $active_tab = $form_state['input']['configuration']['configuration__active_tab'];
+
+  if ($active_tab === _IMPORT_VIEWS_) {
+    $view_file = $form_state['values']['configuration']['import_views']['value']['view_file'];
+    if ($view_file !== '') {
+      $region = $form_state['values']['configuration']['import_views']['value']['region'];
+      $content_restriction = $form_state['values']['configuration']['import_views']['value']['content_type'];
+      $user_restriction = $form_state['values']['configuration']['import_views']['value']['user_restriction'];
+
+      if ($content_restriction === '-1') {
+	$content_restriction = NULL;
+      }
+      if ($user_restriction === '-1') {
+	$user_restriction = NULL;
+      } else {
+	$user_restriction = 2;
+      }
+      import_view($view_file, $region, $content_restriction, $user_restriction);
+    } else {
+      drupal_set_message('Please enter a valid view file.', 'error');
+    }
+  }
+  if ($active_tab === _IMPORT_CONTENT_) {
+    $ontology_file = $form_state['values']['configuration']['import_content']['value']['content_file'];
+    
+    if ($ontology_file !== '') {
+      $content_type = $form_state['values']['configuration']['import_content']['value']['content_import'];
+      if ($content_type !== '-1') {
+	import_content($ontology_file, $content_type);
+      } else {
+	drupal_set_message('Please select a valid content type.', 'error');
+      }
+    } else {
+      drupal_set_message('Please enter a valid ontology location.', 'error');
+    }
+  }
+  if ($active_tab === _IMPORT_TEXT_) {
+    $desc_folder = $form_state['values']['configuration']['import_text']['value']['desc_folder'];
+    if ($desc_folder !== '') {
+      import_descriptions($desc_folder);
+    } else {
+      drupal_set_message('Please enter a valid folder location.', 'error');
+    }
+  }
+  if ($active_tab === _DELETE_CONTENT_) {
+    $to_delete = $form_state['values']['configuration']['delete_content']['value']['to_delete'];
+      if ($to_delete !== '-1') {
+	delete_content($to_delete);
+      } else {
+	drupal_set_message('Please select a valid content type to be deleted.', 'error');
+      }
+  }
+
+  return $form;
+}

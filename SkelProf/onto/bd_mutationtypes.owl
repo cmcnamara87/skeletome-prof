@@ -1,0 +1,699 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE rdf:RDF [
+    <!ENTITY fma "http://sig.uw.edu/fma#" >
+    <!ENTITY uo "http://purl.org/obo/owl/UO#" >
+    <!ENTITY hpo "http://purl.org/obo/owl/HP#" >
+    <!ENTITY pato "http://purl.org/obo/owl/PATO#" >
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY reams "http://esdn.org/eurogrowbase.owl#" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY snap "http://www.ifomis.org/bfo/1.1/snap#" >
+    <!ENTITY span "http://www.ifomis.org/bfo/1.1/span#" >
+    <!ENTITY skos "http://www.w3.org/2004/02/skos/core#" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY bonedysplasia "http://purl.org/skeletome/bonedysplasia#3-" >
+    <!ENTITY dc "http://dublincore.org/documents/dcmi-terms/" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+    <!ENTITY nci "http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#" >
+]>
+
+
+<rdf:RDF xmlns="http://purl.org/skeletome/bonedysplasia#"
+     xml:base="http://purl.org/skeletome/bonedysplasia"
+     xmlns:dc="http://dublincore.org/documents/dcmi-terms/"
+     xmlns:snap="http://www.ifomis.org/bfo/1.1/snap#"
+     xmlns:span="http://www.ifomis.org/bfo/1.1/span#"
+     xmlns:nci="http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#"
+     xmlns:reams="http://esdn.org/eurogrowbase.owl#"
+     xmlns:uo="http://purl.org/obo/owl/UO#"
+     xmlns:hpo="http://purl.org/obo/owl/HP#"
+     xmlns:pato="http://purl.org/obo/owl/PATO#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:bonedysplasia="http://purl.org/skeletome/bonedysplasia#3-"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:fma="http://sig.uw.edu/fma#"
+     xmlns:skos="http://www.w3.org/2004/02/skos/core#">
+    <owl:Ontology rdf:about="http://purl.org/skeletome/bonedysplasia#">
+        <rdfs:label rdf:datatype="&xsd;string">Bone Dysplasia Ontology</rdfs:label>
+        <dc:contributor rdf:datatype="&xsd;string">Andreas Zankl</dc:contributor>
+        <dc:contributor rdf:datatype="&xsd;string">Jane Hunter</dc:contributor>
+        <dc:created rdf:datatype="&xsd;string">January 12, 2011</dc:created>
+        <dc:contributor rdf:datatype="&xsd;string">Tudor Groza</dc:contributor>
+        <dc:creator rdf:datatype="&xsd;string">Tudor Groza</dc:creator>
+        <dc:contributor rdf:datatype="&xsd;string">Yuan-Fang Li</dc:contributor>
+        <dc:publisher rdf:datatype="&xsd;string">eResearch Lab, School of ITEE, The University of Queensland</dc:publisher>
+        <dc:language rdf:datatype="&xsd;string">en</dc:language>
+        <dc:format rdf:datatype="&xsd;string">rdf/xml</dc:format>
+        <dc:title xml:lang="en">Bone Dysplasia Ontology</dc:title>
+        
+        <owl:imports rdf:resource="http://purl.org/obo/owl/HP"/>
+        <owl:imports rdf:resource="http://purl.org/obo/owl/PATO"/>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <owl:AnnotationProperty rdf:about="&dc;format"/>
+    <owl:AnnotationProperty rdf:about="http://purl.org/skeletome/bonedysplasia#uniprot_id">
+        <rdfs:label rdf:datatype="&xsd;string">uniprot id</rdfs:label>
+        <skos:altLabel rdf:datatype="&xsd;string">UNIPROT</skos:altLabel>
+    </owl:AnnotationProperty>
+    <owl:AnnotationProperty rdf:about="http://purl.org/skeletome/bonedysplasia#ref_seq">
+        <rdfs:label rdf:datatype="&xsd;string">ref seq</rdfs:label>
+        <skos:altLabel rdf:datatype="&xsd;string">reference sequence</skos:altLabel>
+    </owl:AnnotationProperty>
+    <owl:AnnotationProperty rdf:about="&dc;publisher"/>
+    <owl:AnnotationProperty rdf:about="http://purl.org/skeletome/bonedysplasia#mutated_content">
+        <rdfs:label rdf:datatype="&xsd;string">mutated content</rdfs:label>
+    </owl:AnnotationProperty>
+    <owl:AnnotationProperty rdf:about="http://purl.org/skeletome/bonedysplasia#accession_no">
+        <rdfs:label rdf:datatype="&xsd;string">Accession Number</rdfs:label>
+    </owl:AnnotationProperty>
+    <owl:AnnotationProperty rdf:about="http://purl.org/skeletome/bonedysplasia#omim_no">
+        <rdfs:label rdf:datatype="&xsd;string">OMIM number</rdfs:label>
+        <skos:altLabel rdf:datatype="&xsd;string">OMIM</skos:altLabel>
+    </owl:AnnotationProperty>
+    <owl:AnnotationProperty rdf:about="http://purl.org/skeletome/bonedysplasia#go_term">
+        <rdfs:label rdf:datatype="&xsd;string">go term</rdfs:label>
+        <skos:altLabel rdf:datatype="&xsd;string">Gene Ontology term</skos:altLabel>
+    </owl:AnnotationProperty>
+    <owl:AnnotationProperty rdf:about="http://purl.org/skeletome/bonedysplasia#encoding">
+        <rdfs:label rdf:datatype="&xsd;string">encoding</rdfs:label>
+    </owl:AnnotationProperty>
+    <owl:AnnotationProperty rdf:about="http://purl.org/skeletome/bonedysplasia#offset">
+        <rdfs:label rdf:datatype="&xsd;string">offset</rdfs:label>
+    </owl:AnnotationProperty>
+    <owl:AnnotationProperty rdf:about="http://purl.org/skeletome/bonedysplasia#locus">
+        <rdfs:label rdf:datatype="&xsd;string">locus</rdfs:label>
+    </owl:AnnotationProperty>
+    <owl:AnnotationProperty rdf:about="&dc;title"/>
+    <owl:AnnotationProperty rdf:about="&dc;contributor"/>
+    <owl:AnnotationProperty rdf:about="http://purl.org/skeletome/bonedysplasia#count">
+        <rdfs:label rdf:datatype="&xsd;string">count</rdfs:label>
+    </owl:AnnotationProperty>
+    <owl:AnnotationProperty rdf:about="&rdfs;label"/>
+    <owl:AnnotationProperty rdf:about="http://purl.org/skeletome/bonedysplasia#entrezgene_id">
+        <rdfs:label rdf:datatype="&xsd;string">Entrez Gene ID</rdfs:label>
+    </owl:AnnotationProperty>
+    <owl:AnnotationProperty rdf:about="&dc;language"/>
+    <owl:AnnotationProperty rdf:about="&dc;creator"/>
+    <owl:AnnotationProperty rdf:about="&rdfs;seeAlso"/>
+    <owl:AnnotationProperty rdf:about="http://purl.org/skeletome/bonedysplasia#umls_cui">
+        <rdfs:label rdf:datatype="&xsd;string">UMLS CUI</rdfs:label>
+    </owl:AnnotationProperty>
+    <owl:AnnotationProperty rdf:about="&dc;created"/>
+    <owl:AnnotationProperty rdf:about="http://purl.org/skeletome/bonedysplasia#original_content">
+        <rdfs:label rdf:datatype="&xsd;string">original content</rdfs:label>
+    </owl:AnnotationProperty>
+    <owl:AnnotationProperty rdf:about="&skos;altLabel"/>
+    <owl:AnnotationProperty rdf:about="http://purl.org/skeletome/bonedysplasia#mesh_id">
+        <rdfs:label rdf:datatype="&xsd;string">MESH id</rdfs:label>
+        <skos:altLabel rdf:datatype="&xsd;string">MESH</skos:altLabel>
+    </owl:AnnotationProperty>
+    
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Adenosine_to_Cytosine_Transversion_Abnormality -->
+
+    <owl:Class rdf:about="&nci;Adenosine_to_Cytosine_Transversion_Abnormality">
+        <rdfs:label rdf:datatype="&xsd;string">Adenosine to Cytosine Transversion Abnormality</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&nci;Transversion_Mutation"/>
+        <umls_cui rdf:datatype="&xsd;string">C1706716</umls_cui>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Adenosine_to_Guanosine_Transition_Abnormality -->
+
+    <owl:Class rdf:about="&nci;Adenosine_to_Guanosine_Transition_Abnormality">
+        <rdfs:label rdf:datatype="&xsd;string">Adenosine to Guanosine Transition Abnormality</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&nci;Transition_Mutation"/>
+        <umls_cui rdf:datatype="&xsd;string">C1706717</umls_cui>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Adenosine_to_Thymidine_Transversion_Abnormality -->
+
+    <owl:Class rdf:about="&nci;Adenosine_to_Thymidine_Transversion_Abnormality">
+        <rdfs:label rdf:datatype="&xsd;string">Adenosine to Thymidine Transversion Abnormality</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&nci;Transversion_Mutation"/>
+        <umls_cui rdf:datatype="&xsd;string">C1706718</umls_cui>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Bistrand_Abasic_Site -->
+
+    <owl:Class rdf:about="&nci;Bistrand_Abasic_Site">
+        <rdfs:label rdf:datatype="&xsd;string">Bistrand Abasic Site</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&nci;Mutation_Abnormality"/>
+        <umls_cui rdf:datatype="&xsd;string">C1511183</umls_cui>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Cancer_Gene_Mutation -->
+
+    <owl:Class rdf:about="&nci;Cancer_Gene_Mutation">
+        <rdfs:label rdf:datatype="&xsd;string">Cancer Gene Mutation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&nci;Gene_Mutation"/>
+        <umls_cui rdf:datatype="&xsd;string">C1516197</umls_cui>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Cytosine_to_Adenosine_Transversion_Abnormality -->
+
+    <owl:Class rdf:about="&nci;Cytosine_to_Adenosine_Transversion_Abnormality">
+        <rdfs:label rdf:datatype="&xsd;string">Cytosine to Adenosine Transversion Abnormality</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&nci;Transversion_Mutation"/>
+        <umls_cui rdf:datatype="&xsd;string">C1707604</umls_cui>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Cytosine_to_Guanosine_Transversion_Abnormality -->
+
+    <owl:Class rdf:about="&nci;Cytosine_to_Guanosine_Transversion_Abnormality">
+        <rdfs:label rdf:datatype="&xsd;string">Cytosine to Guanosine Transversion Abnormality</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&nci;Transversion_Mutation"/>
+        <umls_cui rdf:datatype="&xsd;string">C1707605</umls_cui>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Cytosine_to_Thymidine_Transition_Abnormality -->
+
+    <owl:Class rdf:about="&nci;Cytosine_to_Thymidine_Transition_Abnormality">
+        <rdfs:label rdf:datatype="&xsd;string">Cytosine to Thymidine Transition Abnormality</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&nci;Transition_Mutation"/>
+        <umls_cui rdf:datatype="&xsd;string">C1707606</umls_cui>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Deleterious_Mutation -->
+
+    <owl:Class rdf:about="&nci;Deleterious_Mutation">
+        <rdfs:label rdf:datatype="&xsd;string">Deleterious Mutation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&nci;Mutation_Abnormality"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Deletion_Mutation -->
+
+    <owl:Class rdf:about="&nci;Deletion_Mutation">
+        <rdfs:label rdf:datatype="&xsd;string">Deletion Mutation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&nci;Mutation_Abnormality"/>
+        <umls_cui rdf:datatype="&xsd;string">C1511760</umls_cui>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Disease-causing_Mutation -->
+
+    <owl:Class rdf:about="&nci;Disease-causing_Mutation">
+        <rdfs:label rdf:datatype="&xsd;string">Disease-causing Mutation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&nci;Mutation_Abnormality"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Dominant-Negative_Mutation -->
+
+    <owl:Class rdf:about="&nci;Dominant-Negative_Mutation">
+        <rdfs:label rdf:datatype="&xsd;string">Dominant-Negative Mutation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&nci;Gene_Mutation"/>
+        <umls_cui rdf:datatype="&xsd;string">C1512032</umls_cui>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Embryonic_Lethal_Mutation -->
+
+    <owl:Class rdf:about="&nci;Embryonic_Lethal_Mutation">
+        <rdfs:label rdf:datatype="&xsd;string">Embryonic Lethal Mutation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&nci;Mutation_Abnormality"/>
+        <umls_cui rdf:datatype="&xsd;string">C1516823</umls_cui>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Founder_Mutation -->
+
+    <owl:Class rdf:about="&nci;Founder_Mutation">
+        <rdfs:label rdf:datatype="&xsd;string">Founder Mutation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&nci;Mutation_Abnormality"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Frameshift_Mutation -->
+
+    <owl:Class rdf:about="&nci;Frameshift_Mutation">
+        <rdfs:label rdf:datatype="&xsd;string">Frameshift Mutation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&nci;Mutation_Abnormality"/>
+        <umls_cui rdf:datatype="&xsd;string">C0079380</umls_cui>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Gene_Alteration_Environmentally_Produced -->
+
+    <owl:Class rdf:about="&nci;Gene_Alteration_Environmentally_Produced">
+        <rdfs:label rdf:datatype="&xsd;string">Gene Alteration, Environmentally Produced</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&nci;Induced_Mutation"/>
+        <umls_cui rdf:datatype="&xsd;string">C1516890</umls_cui>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Gene_Deletion -->
+
+    <owl:Class rdf:about="&nci;Gene_Deletion">
+        <rdfs:label rdf:datatype="&xsd;string">Gene Deletion</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&nci;Deletion_Mutation"/>
+        <umls_cui rdf:datatype="&xsd;string">C0017260</umls_cui>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Gene_Fusion -->
+
+    <owl:Class rdf:about="&nci;Gene_Fusion">
+        <rdfs:label rdf:datatype="&xsd;string">Gene Fusion</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&nci;Gene_Mutation"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Gene_Mutation -->
+
+    <owl:Class rdf:about="&nci;Gene_Mutation">
+        <rdfs:label rdf:datatype="&xsd;string">Gene Mutation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&nci;Mutation_Abnormality"/>
+        <umls_cui rdf:datatype="&xsd;string">C0596611</umls_cui>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Germline_Mutation -->
+
+    <owl:Class rdf:about="&nci;Germline_Mutation">
+        <rdfs:label rdf:datatype="&xsd;string">Germline Mutation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&nci;Mutation_Abnormality"/>
+        <umls_cui rdf:datatype="&xsd;string">C0206530</umls_cui>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Germline_Mutation_Abnormality -->
+
+    <owl:Class rdf:about="&nci;Germline_Mutation_Abnormality">
+        <rdfs:label rdf:datatype="&xsd;string">Germline Mutation Abnormality</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&nci;Mutation_Abnormality"/>
+        <umls_cui rdf:datatype="&xsd;string">C1705427</umls_cui>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Guanosine_to_Adenosine_Transition_Abnormality -->
+
+    <owl:Class rdf:about="&nci;Guanosine_to_Adenosine_Transition_Abnormality">
+        <rdfs:label rdf:datatype="&xsd;string">Guanosine to Adenosine Transition Abnormality</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&nci;Transition_Mutation"/>
+        <umls_cui rdf:datatype="&xsd;string">C1708261</umls_cui>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Guanosine_to_Cytosine_Transversion_Abnormality -->
+
+    <owl:Class rdf:about="&nci;Guanosine_to_Cytosine_Transversion_Abnormality">
+        <rdfs:label rdf:datatype="&xsd;string">Guanosine to Cytosine Transversion Abnormality</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&nci;Transversion_Mutation"/>
+        <umls_cui rdf:datatype="&xsd;string">C1708262</umls_cui>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Guanosine_to_Thymidine_Transversion_Abnormality -->
+
+    <owl:Class rdf:about="&nci;Guanosine_to_Thymidine_Transversion_Abnormality">
+        <rdfs:label rdf:datatype="&xsd;string">Guanosine to Thymidine Transversion Abnormality</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&nci;Transversion_Mutation"/>
+        <umls_cui rdf:datatype="&xsd;string">C1708263</umls_cui>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Induced_Mutation -->
+
+    <owl:Class rdf:about="&nci;Induced_Mutation">
+        <rdfs:label rdf:datatype="&xsd;string">Induced Mutation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&nci;Mutation_Abnormality"/>
+        <umls_cui rdf:datatype="&xsd;string">C1705427</umls_cui>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Inframe_Mutation -->
+
+    <owl:Class rdf:about="&nci;Inframe_Mutation">
+        <rdfs:label rdf:datatype="&xsd;string">Inframe Mutation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&nci;Point_Mutation"/>
+        <umls_cui rdf:datatype="&xsd;string">C1881206</umls_cui>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Insertion_Mutation -->
+
+    <owl:Class rdf:about="&nci;Insertion_Mutation">
+        <rdfs:label rdf:datatype="&xsd;string">Insertion Mutation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&nci;Mutation_Abnormality"/>
+        <umls_cui rdf:datatype="&xsd;string">C1512796</umls_cui>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Intron_Splice_Region_Mutation -->
+
+    <owl:Class rdf:about="&nci;Intron_Splice_Region_Mutation">
+        <rdfs:label rdf:datatype="&xsd;string">Intron Splice Region Mutation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&nci;Intronic_Mutation"/>
+        <umls_cui rdf:datatype="&xsd;string">C1881249</umls_cui>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Intronic_Mutation -->
+
+    <owl:Class rdf:about="&nci;Intronic_Mutation">
+        <rdfs:label rdf:datatype="&xsd;string">Intronic Mutation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&nci;Gene_Mutation"/>
+        <umls_cui rdf:datatype="&xsd;string">C1881250</umls_cui>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Inversion_Mutation_Abnormality -->
+
+    <owl:Class rdf:about="&nci;Inversion_Mutation_Abnormality">
+        <rdfs:label rdf:datatype="&xsd;string">Inversion Mutation Abnormality</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&nci;Mutation_Abnormality"/>
+        <umls_cui rdf:datatype="&xsd;string">C1705687</umls_cui>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Missense_Mutation -->
+
+    <owl:Class rdf:about="&nci;Missense_Mutation">
+        <rdfs:label rdf:datatype="&xsd;string">Missense Mutation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&nci;Point_Mutation"/>
+        <umls_cui rdf:datatype="&xsd;string">C0599155</umls_cui>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Mixed_Nucleotide_Abnormalities -->
+
+    <owl:Class rdf:about="&nci;Mixed_Nucleotide_Abnormalities">
+        <rdfs:label rdf:datatype="&xsd;string">Mixed Nucleotide Abnormalities</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&nci;Multiple_Nucleotide_Abnormalities"/>
+        <umls_cui rdf:datatype="&xsd;string">C1709051</umls_cui>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Multiple_Nucleotide_Abnormalities -->
+
+    <owl:Class rdf:about="&nci;Multiple_Nucleotide_Abnormalities">
+        <rdfs:label rdf:datatype="&xsd;string">Multiple Nucleotide Abnormalities</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&nci;Mutation_Abnormality"/>
+        <umls_cui rdf:datatype="&xsd;string">C1709092</umls_cui>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Multiple_Transition_Abnormalities -->
+
+    <owl:Class rdf:about="&nci;Multiple_Transition_Abnormalities">
+        <rdfs:label rdf:datatype="&xsd;string">Multiple Transition Abnormalities</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&nci;Multiple_Nucleotide_Abnormalities"/>
+        <umls_cui rdf:datatype="&xsd;string">C1709093</umls_cui>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Multiple_Transversion_Abnormalities -->
+
+    <owl:Class rdf:about="&nci;Multiple_Transversion_Abnormalities">
+        <rdfs:label rdf:datatype="&xsd;string">Multiple Transversion Abnormalities</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&nci;Multiple_Nucleotide_Abnormalities"/>
+        <umls_cui rdf:datatype="&xsd;string">C1709094</umls_cui>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Mutation_Abnormality -->
+
+    <owl:Class rdf:about="&nci;Mutation_Abnormality">
+        <rdfs:label rdf:datatype="&xsd;string">Mutation Abnormality</rdfs:label>
+        <umls_cui rdf:datatype="&xsd;string">C1705285</umls_cui>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Nonsense_Mutation -->
+
+    <owl:Class rdf:about="&nci;Nonsense_Mutation">
+        <rdfs:label rdf:datatype="&xsd;string">Nonsense Mutation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&nci;Point_Mutation"/>
+        <umls_cui rdf:datatype="&xsd;string">C0544885</umls_cui>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Novel_Mutation -->
+
+    <owl:Class rdf:about="&nci;Novel_Mutation">
+        <rdfs:label rdf:datatype="&xsd;string">Novel Mutation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&nci;Mutation_Abnormality"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Null_Allele -->
+
+    <owl:Class rdf:about="&nci;Null_Allele">
+        <rdfs:label rdf:datatype="&xsd;string">Null Allele</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&nci;Mutation_Abnormality"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Point_Mutation -->
+
+    <owl:Class rdf:about="&nci;Point_Mutation">
+        <rdfs:label rdf:datatype="&xsd;string">Point Mutation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&nci;Mutation_Abnormality"/>
+        <umls_cui rdf:datatype="&xsd;string">C0162735</umls_cui>
+    </owl:Class>
+    
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Restriction_Site_Polymorphism -->
+
+    <owl:Class rdf:about="&nci;Restriction_Site_Polymorphism">
+        <rdfs:label rdf:datatype="&xsd;string">Restriction Site Polymorphism</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&nci;Mutation_Abnormality"/>
+        <umls_cui rdf:datatype="&xsd;string">C1709929</umls_cui>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Silent_Mutation -->
+
+    <owl:Class rdf:about="&nci;Silent_Mutation">
+        <rdfs:label rdf:datatype="&xsd;string">Silent Mutation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&nci;Point_Mutation"/>
+        <umls_cui rdf:datatype="&xsd;string">C1519323</umls_cui>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Somatic_Mutation -->
+
+    <owl:Class rdf:about="&nci;Somatic_Mutation">
+        <rdfs:label rdf:datatype="&xsd;string">Somatic Mutation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&nci;Mutation_Abnormality"/>
+        <umls_cui rdf:datatype="&xsd;string">C0544886</umls_cui>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Splice-Site_Mutation -->
+
+    <owl:Class rdf:about="&nci;Splice-Site_Mutation">
+        <rdfs:label rdf:datatype="&xsd;string">Splice-Site Mutation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&nci;Gene_Mutation"/>
+        <umls_cui rdf:datatype="&xsd;string">C1519478</umls_cui>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Sporadic_Breast_Tumor_Mutation -->
+
+    <owl:Class rdf:about="&nci;Sporadic_Breast_Tumor_Mutation">
+        <rdfs:label rdf:datatype="&xsd;string">Sporadic Breast Tumor Mutation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&nci;Cancer_Gene_Mutation"/>
+        <umls_cui rdf:datatype="&xsd;string">C1519481</umls_cui>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Tandem_Repeat_Variation -->
+
+    <owl:Class rdf:about="&nci;Tandem_Repeat_Variation">
+        <rdfs:label rdf:datatype="&xsd;string">Tandem Repeat Variation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&nci;Mutation_Abnormality"/>
+        <umls_cui rdf:datatype="&xsd;string">C1710347</umls_cui>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Targeted_Mutation -->
+
+    <owl:Class rdf:about="&nci;Targeted_Mutation">
+        <rdfs:label rdf:datatype="&xsd;string">Targeted Mutation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&nci;Mutation_Abnormality"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Thymidine_to_Adenosine_Transversion_Abnormality -->
+
+    <owl:Class rdf:about="&nci;Thymidine_to_Adenosine_Transversion_Abnormality">
+        <rdfs:label rdf:datatype="&xsd;string">Thymidine to Adenosine Transversion Abnormality</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&nci;Transversion_Mutation"/>
+        <umls_cui rdf:datatype="&xsd;string">C1710404</umls_cui>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Thymidine_to_Cytosine_Transition_Abnormality -->
+
+    <owl:Class rdf:about="&nci;Thymidine_to_Cytosine_Transition_Abnormality">
+        <rdfs:label rdf:datatype="&xsd;string">Thymidine to Cytosine Transition Abnormality</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&nci;Transition_Mutation"/>
+        <umls_cui rdf:datatype="&xsd;string">C1710405</umls_cui>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Thymidine_to_Guanosine_Transversion_Abnormality -->
+
+    <owl:Class rdf:about="&nci;Thymidine_to_Guanosine_Transversion_Abnormality">
+        <rdfs:label rdf:datatype="&xsd;string">Thymidine to Guanosine Transversion Abnormality</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&nci;Transversion_Mutation"/>
+        <umls_cui rdf:datatype="&xsd;string">C1710406</umls_cui>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Transition_Mutation -->
+
+    <owl:Class rdf:about="&nci;Transition_Mutation">
+        <rdfs:label rdf:datatype="&xsd;string">Transition Mutation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&nci;Point_Mutation"/>
+        <umls_cui rdf:datatype="&xsd;string">C0599156</umls_cui>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Transversion_Mutation -->
+
+    <owl:Class rdf:about="&nci;Transversion_Mutation">
+        <rdfs:label rdf:datatype="&xsd;string">Transversion Mutation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&nci;Point_Mutation"/>
+        <umls_cui rdf:datatype="&xsd;string">C0599157</umls_cui>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#UV_Mutation_Abnormality -->
+
+    <owl:Class rdf:about="&nci;UV_Mutation_Abnormality">
+        <rdfs:label rdf:datatype="&xsd;string">UV Mutation Abnormality</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&nci;Mutation_Abnormality"/>
+        <umls_cui rdf:datatype="&xsd;string">C1710523</umls_cui>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#_3_Flank_Mutation -->
+
+    <owl:Class rdf:about="&nci;_3_Flank_Mutation">
+        <rdfs:label rdf:datatype="&xsd;string">3&#39; Flank Mutation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&nci;Gene_Mutation"/>
+        <umls_cui rdf:datatype="&xsd;string">C1883632</umls_cui>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#_3_Untranslated_Region_Mutation -->
+
+    <owl:Class rdf:about="&nci;_3_Untranslated_Region_Mutation">
+        <rdfs:label rdf:datatype="&xsd;string">3&#39; Untranslated Region Mutation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&nci;_3_Flank_Mutation"/>
+        <umls_cui rdf:datatype="&xsd;string">C1883634</umls_cui>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#_5_Flank_Mutation -->
+
+    <owl:Class rdf:about="&nci;_5_Flank_Mutation">
+        <rdfs:label rdf:datatype="&xsd;string">5&#39; Flank Mutation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&nci;Gene_Mutation"/>
+        <umls_cui rdf:datatype="&xsd;string">C1883643</umls_cui>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#_5_Untranslated_Region_Mutation -->
+
+    <owl:Class rdf:about="&nci;_5_Untranslated_Region_Mutation">
+        <rdfs:label rdf:datatype="&xsd;string">5&#39; Untranslated Region Mutation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&nci;_5_Flank_Mutation"/>
+        <umls_cui rdf:datatype="&xsd;string">C1883645</umls_cui>
+    </owl:Class>
+    
+
+
+    <!-- http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#de_novo_Mutation -->
+
+    <owl:Class rdf:about="&nci;de_novo_Mutation">
+        <rdfs:label rdf:datatype="&xsd;string">de novo Mutation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&nci;Mutation_Abnormality"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.w3.org/2002/07/owl#Thing -->
+
+    <owl:Class rdf:about="&owl;Thing"/>
+</rdf:RDF>
