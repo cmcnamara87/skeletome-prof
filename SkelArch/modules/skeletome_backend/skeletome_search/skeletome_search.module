@@ -1,0 +1,385 @@
+<?php
+// $Id: skeletome_search.module $
+
+function skeletome_search_init() {
+  // Only load these if it is not a cached page
+  module_load_include('inc', 'skeletome_search', 'inc/PatientSnippetCreator');
+  module_load_include('inc', 'skeletome_search', 'inc/CISnippetCreator');
+  module_load_include('inc', 'skeletome_search', 'inc/CSSnippetCreator');
+  module_load_include('inc', 'skeletome_search', 'inc/ConsentItemSnippetCreator');
+  module_load_include('inc', 'skeletome_search', 'inc/RefLetterSnippetCreator');
+  module_load_include('inc', 'skeletome_search', 'inc/DiagnosisSnippetCreator');
+  module_load_include('inc', 'skeletome_search', 'inc/GenRepSnippetCreator');
+  module_load_include('inc', 'skeletome_search', 'inc/GeneMutationSnippetCreator');
+  module_load_include('inc', 'skeletome_search', 'inc/XRayCollSnippetCreator');
+  module_load_include('inc', 'skeletome_search', 'inc/XRaySnippetCreator');
+  module_load_include('inc', 'skeletome_search', 'inc/ForumSnippetCreator');
+  module_load_include('inc', 'skeletome_search', 'inc/FSSnippetCreator');
+}
+
+function skeletome_search_apachesolr_index_document_build_node(ApacheSolrDocument $document, $entity, $env_id) {
+  $types_array = array('contact_information', 'clinical_summary', 'consent_item', 'diagnosis', 'forum', 'gene_mutation', 'genetic_report', 'patient', 'patient_note', 'reference_letter', 'skeletome_group', 'x_ray', 'media_gallery', 'diagnosis_comment', 'forum_summary');
+
+  /**
+   * Patient details
+   */
+
+  if ($entity->type == 'patient') {
+    if (array_key_exists('und', $entity->field_patient_identifier)) {
+      foreach($entity->field_patient_identifier['und'] as $id) {
+	$document->setMultiValue('tm_field_patient_identifier', $id['value']);
+      }
+    }
+  }
+
+  if ($entity->type == 'contact_information') {
+    if (array_key_exists('und', $entity->field_patient_firstname)) {
+      $document->setMultiValue('tm_field_patient_firstname', $entity->field_patient_firstname['und'][0]['value']);
+    }
+    if (array_key_exists('und', $entity->field_patient_lastname)) {
+      $document->setMultiValue('tm_field_patient_lastname', $entity->field_patient_lastname['und'][0]['value']);
+    }
+    if (array_key_exists('und', $entity->field_patient_alias)) {
+      $document->setMultiValue('tm_field_patient_alias', $entity->field_patient_alias['und'][0]['value']);
+    }
+    if (array_key_exists('und', $entity->field_patient_ethnicity)) {
+      $document->setMultiValue('tm_field_patient_ethnicity', $entity->field_patient_ethnicity['und'][0]['value']);
+    }
+    if (array_key_exists('und', $entity->field_patient_addressstreet)) {
+      $document->setMultiValue('tm_field_patient_addressstreet', $entity->field_patient_addressstreet['und'][0]['value']);
+    }
+    if (array_key_exists('und', $entity->field_patient_addresscity)) {
+      $document->setMultiValue('tm_field_patient_addresscity', $entity->field_patient_addresscity['und'][0]['value']);
+    }
+    if (array_key_exists('und', $entity->field_patient_addressstate)) {
+      $document->setMultiValue('tm_field_patient_addressstate', $entity->field_patient_addressstate['und'][0]['value']);
+    }
+    if (array_key_exists('und', $entity->field_patient_addresspostcode)) {
+      $document->setMultiValue('tm_field_patient_addresspostcode', $entity->field_patient_addresspostcode['und'][0]['value']);
+    }
+    if (array_key_exists('und', $entity->field_patient_addresscountry)) {
+      $document->setMultiValue('tm_field_patient_addresscountry', $entity->field_patient_addresscountry['und'][0]['value']);
+    }
+  }
+
+  /**
+   * Clinical summary
+   */
+
+  if ($entity->type == 'clinical_summary') {
+    if (array_key_exists('und', $entity->field_cs_clinicalsummary)) {
+      $document->setMultiValue('tm_cs_clinicalsummary', $entity->field_cs_clinicalsummary['und'][0]['value']);
+    }
+  }
+
+
+  /**
+   * X-Ray details
+   */
+
+  if ($entity->type == 'x_ray') {
+    if (array_key_exists('und', $entity->field_xray_description)) {
+      $document->setMultiValue('tm_field_xray_description', $entity->field_xray_description['und'][0]['value']);
+    }
+    if (array_key_exists('und', $entity->field_xray_xraydescription)) {
+      foreach ($entity->field_xray_xraydescription['und'] as $xray_desc) {
+	$xray_desc_node = node_load($xray_desc['nid']);
+	$document->setMultiValue('tm_field_xray_xraydescription', $xray_desc_node->body['und'][0]['value']);
+      }
+    }
+  }
+
+  /**
+   * Forum comments
+   */
+
+  if ($entity->type == 'forum') {
+    $cids = array();
+    $sql = 'SELECT cid FROM {comment} c WHERE c.nid = :nid';
+    $result = db_query($sql, array(':nid' => $entity->nid));
+    foreach ($result as $row) {
+      $cids[] = $row->cid;
+    }
+
+    foreach ($cids as $cid) {
+      $sql = 'SELECT comment_body_value FROM {field_data_comment_body} cbody WHERE cbody.entity_id = :eid';
+      $result = db_query($sql, array(':eid' => $cid));
+      foreach ($result as $row) {
+	$document->setMultiValue('tm_forum_comment', strip_tags($row->comment_body_value));
+      }
+    }
+  }
+
+  if ($entity->type == 'reference_letter') {
+    if (array_key_exists('und', $entity->body)) {
+      $document->setMultiValue('tm_refletter_body', $entity->body['und'][0]['value']);
+    }
+  }
+
+  if ($entity->type == 'diagnosis_comment') {
+    if (array_key_exists('und', $entity->body)) {
+      $document->setMultiValue('tm_diagcomment_body', $entity->body['und'][0]['value']);
+    }
+  }
+
+  if ($entity->type == 'forum_summary') {
+    if (array_key_exists('und', $entity->body)) {
+      $document->setMultiValue('tm_forumsummary_body', $entity->body['und'][0]['value']);
+    }
+  }
+
+
+  /**
+   * Access control
+   */
+
+  if (in_array($entity->type, $types_array)) {
+//    debug($entity->type . ' -> Title: ' . $entity->title . ' -> NID: ' . $entity->nid . ' -> UID: ' . $entity->uid);
+    $audience = "";
+
+    if (property_exists($entity, 'group_audience')) {
+      if (array_key_exists('und', $entity->group_audience)) {
+	foreach ($entity->group_audience['und'] as $group) {
+	  $audience = "gid" . $group['gid'];
+
+//	  debug('Adding group audience: ' . $audience);
+//	  $document->setMultiValue('tm_audience', $audience);
+	  $document->setMultiValue('im_group_audience', (int)$group['gid']);
+	}
+      } else {
+	$audience = "uid" . $entity->uid;
+
+//	debug('Group audience not found. Adding user specific audience: ' . $audience);
+//	$document->setMultiValue('tm_audience', $audience);
+	$document->setMultiValue('im_user_audience', (int)$entity->uid);
+      }
+    } else {
+      $audience = "uid" . $entity->uid;
+
+//      debug('Group audience property not found. Adding user specific audience: ' . $audience);
+//      $document->setMultiValue('tm_audience', $audience);
+      $document->setMultiValue('im_user_audience', (int)$entity->uid);
+    }
+  }
+}
+
+function marinelli_preprocess_search_result(&$variables) {
+  $base_path = url(NULL, array('absolute' => TRUE));
+  $node = $variables['result']['node'];
+
+  $actual_node = node_load($node->entity_id);
+  $patient_node = NULL;
+
+  if ($node->bundle == 'x_ray') {
+    $file = file_load($actual_node->field_xray_media['und'][0]['fid']);
+    $variables['x_ray_image'] = $file->uri;
+
+    $xray_coll_node = node_load($actual_node->field_xray_xraycollection['und'][0]['nid']);
+    $variables['coll_title'] = $xray_coll_node->title;
+    $variables['coll_url'] = $base_path . 'node/' . $xray_coll_node->nid;
+
+    $patient_node = node_load($xray_coll_node->media_gallery_patient['und'][0]['nid']);
+  }
+  if ($node->bundle == 'gene_mutation') {
+    $genrep_node = node_load($actual_node->field_gene_mutation_genrep['und'][0]['nid']);
+    $variables['coll_title'] = $genrep_node->title;
+    $variables['coll_url'] = $base_path . 'node/' . $genrep_node->nid;
+    $variables['no_url'] = 'YES';
+    $patient_node = node_load($genrep_node->field_genrep_patient['und'][0]['nid']);
+  }
+
+  if ($node->bundle == 'forum_summary') {
+    if (array_key_exists('und', $actual_node->field_forumsummary_patient)) {
+      $patient_node = node_load($actual_node->field_forumsummary_patient['und'][0]['nid']);
+    }
+    if (array_key_exists('und', $actual_node->field_forumsummary_forum)) {
+      $forum_node = node_load($actual_node->field_forumsummary_forum['und'][0]['nid']);
+      $variables['coll_title'] = $forum_node->title . ' discussion';
+      $variables['coll_url'] = $base_path . 'node/' . $forum_node->nid;
+    }
+  }
+
+  if ($node->bundle == 'forum') {
+    if (array_key_exists('und', $actual_node->field_forum_patient)) {
+      $patient_node = node_load($actual_node->field_forum_patient['und'][0]['nid']);
+    }
+    if (array_key_exists('und', $actual_node->taxonomy_forums)) {
+      $forum_term = taxonomy_term_load($actual_node->taxonomy_forums['und'][0]['tid']);
+      $variables['coll_title'] = $forum_term->name;
+      $variables['coll_url'] = $base_path . 'forum/' . $forum_term->tid;
+    }
+  }
+
+  if ($node->bundle == 'clinical_summary') {
+    $patient_node = node_load($actual_node->field_cs_patient['und'][0]['nid']);
+  }
+  if ($node->bundle == 'media_gallery') {
+    $patient_node = node_load($actual_node->media_gallery_patient['und'][0]['nid']);
+  }
+  if ($node->bundle == 'genetic_report') {
+    $patient_node = node_load($actual_node->field_genrep_patient['und'][0]['nid']);
+  }
+  if ($node->bundle == 'patient_note') {
+    $patient_node = node_load($actual_node->field_patientnote_patient['und'][0]['nid']);
+  }
+  if ($node->bundle == 'consent_item') {
+    $variables['collection_title'] = 'Consent forms';
+    $patient_node = node_load($actual_node->field_consentitem_patient['und'][0]['nid']);
+  }
+  if ($node->bundle == 'reference_letter') {
+    $variables['collection_title'] = 'Letters';
+    $patient_node = node_load($actual_node->field_referenceletter_patient['und'][0]['nid']);
+  }
+  if ($node->bundle == 'diagnosis') {
+    $patient_node = node_load($actual_node->field_diagnosis_patient['und'][0]['nid']);
+    $variables['is_diagnosis'] = 'YES';
+  }
+  if ($node->bundle == 'diagnosis_comment') {
+    $diag_node = node_load($actual_node->field_diagnosiscomment_diagnosis['und'][0]['nid']);
+    $patient_node = node_load($diag_node->field_diagnosis_patient['und'][0]['nid']);
+    $variables['coll_title'] = $diag_node->title;
+    $variables['coll_url'] = $base_path . 'node/' . $diag_node->nid;
+    $variables['is_diagnosis'] = 'YES';
+  }
+
+  if (isset($patient_node)) {
+    $variables['patient_title'] = $patient_node->title;
+    $variables['patient_url'] = $base_path . 'node/' . $patient_node->nid;
+  }
+}
+
+function skeletome_search_apachesolr_query_alter($query) {
+  global $user;
+
+  /**
+   * Patient detail filters
+   */
+  $query->addParam('qf', 'tm_field_patient_firstname');
+  $query->addParam('qf', 'tm_field_patient_lastname');
+  $query->addParam('qf', 'tm_field_patient_alias');
+  $query->addParam('qf', 'tm_field_patient_ethnicity');
+  $query->addParam('qf', 'tm_field_patient_addressstreet');
+  $query->addParam('qf', 'tm_field_patient_addresscity');
+  $query->addParam('qf', 'tm_field_patient_addressstate');
+  $query->addParam('qf', 'tm_field_patient_addresspostcode');
+  $query->addParam('qf', 'tm_field_patient_addresscountry');
+  $query->addParam('qf', 'tm_field_patient_identifier');
+
+  $query->addParam('qf', 'tm_field_xray_description');
+  $query->addParam('qf', 'tm_field_xray_xraydescription');
+
+  $query->addParam('qf', 'tm_forum_comment');
+  $query->addParam('qf', 'tm_refletter_body');
+
+  $user_groups = get_groups_for_entity($user->uid, 'user');
+  $all_groups = retrieve_groups();
+  $diff = array_diff($all_groups, $user_groups);
+  $users = retrieve_users();
+  $current_user[] = $user->uid;
+  $users_diff = array_diff($users, $current_user);
+
+  foreach ($diff as $group) {
+    $audience_group = (int) $group;
+    $query->addFilter("im_group_audience", $audience_group, TRUE);
+  }
+
+  foreach ($users_diff as $user_i) {
+    $audience_user = (int) $user_i;
+    $query->addFilter("im_user_audience", $audience_user, TRUE);
+  }
+}
+
+function skeletome_search_apachesolr_process_results(&$results, DrupalSolrQueryInterface $query) {
+  $new_results = array();
+
+  drupal_add_css(drupal_get_path('module', 'skeletome_search') . '/skeletome_search.css', array('group' => CSS_DEFAULT));
+  drupal_add_js(drupal_get_path('module', 'skeletome_search') .'/skeletome_search.js', array('group' => JS_DEFAULT));
+
+  foreach($results as $result) {
+/*
+    if (!user_has_rights($result['node']->entity_id)) {
+      continue;
+    }
+*/
+    $node_type = $result['node']->bundle;
+    if ($node_type == 'patient') {
+      $snippet_creator = new PatientSnippetCreator($result['node']->entity_id);
+      $result['snippet'] = $snippet_creator->getGenericSnippet();
+    }
+    if ($node_type == 'contact_information') {
+      $snippet_creator = new CISnippetCreator($result['node']->entity_id);
+      $result['snippet'] = $snippet_creator->getGenericSnippet();
+    }
+    if ($node_type == 'clinical_summary') {
+      $result['title'] = 'Clinical Info';
+      $snippet_creator = new CSSnippetCreator($result['node']->entity_id);
+      $result['snippet'] = $snippet_creator->getSnippet($result['snippet']);
+    }
+    if ($node_type == 'consent_item') {
+      $snippet_creator = new ConsentItemSnippetCreator($result['node']->entity_id);
+      $result['snippet'] = $snippet_creator->getSnippet($result['snippet']);
+    }
+    if ($node_type == 'reference_letter') {
+      $snippet_creator = new RefLetterSnippetCreator($result['node']->entity_id);
+      $result['snippet'] = $snippet_creator->getSnippet($result['snippet']);
+    }
+    if ($node_type == 'diagnosis') {
+      $snippet_creator = new DiagnosisSnippetCreator($result['node']->entity_id);
+      $result['snippet'] = $snippet_creator->getSnippet($result['snippet']);
+    }
+    if ($node_type == 'genetic_report') {
+      $snippet_creator = new GenRepSnippetCreator($result['node']->entity_id);
+      $result['snippet'] = $snippet_creator->getSnippet($result['snippet']);
+    }
+    if ($node_type == 'gene_mutation') {
+      $snippet_creator = new GeneMutationSnippetCreator($result['node']->entity_id);
+      $result['snippet'] = $snippet_creator->getSnippet($result['snippet']);
+    }
+    if ($node_type == 'media_gallery') {
+      $snippet_creator = new XRayCollSnippetCreator($result['node']->entity_id);
+      $result['snippet'] = $snippet_creator->getSnippet($result['snippet'], $query);
+    }
+    if ($node_type == 'x_ray') {
+      $snippet_creator = new XRaySnippetCreator($result['node']->entity_id);
+      $result['snippet'] = $snippet_creator->getSnippet($result['snippet']);
+    }
+    if ($node_type == 'forum') {
+      $result['title'] = $result['title'] . ' discussion';
+      $snippet_creator = new ForumSnippetCreator($result['node']->entity_id);
+      $result['snippet'] = $snippet_creator->getSnippet($result['snippet']);
+    }
+    if ($node_type == 'forum_summary') {
+      $result['title'] = 'Discussion summary';
+      $snippet_creator = new FSSnippetCreator($result['node']->entity_id);
+      $result['snippet'] = $snippet_creator->getSnippet($result['snippet']);
+    }
+
+    $new_results[] = $result;
+  }
+  $results = $new_results;
+}
+
+function user_has_rights($entity_id) {
+  global $user;
+
+  if (is_user_owner($entity_id, $user->uid)) {
+    return TRUE;
+  }
+
+  $user_groups = get_groups_for_entity($user->uid, 'user');
+  $entity_groups = get_groups_for_entity($entity_id, 'node');
+  $intersect = array_intersect($user_groups, $entity_groups);
+
+  return !empty($intersect);
+}
+
+function skeletome_search_apachesolr_search_result_alter($document, &$extra, DrupalSolrQueryInterface $query) {
+//  debug($document);
+//    debug($extra);
+}
+
+function skeletome_search_apachesolr_search_page_alter(&$build, $search_page) {
+//  $info = array('#markup' => t('Add information to every search page'));
+//  array_unshift($build, $info);
+//  debug($build);
+}

@@ -1,0 +1,436 @@
+<?php
+// $Id: skeletome_util.module $
+
+define('__FORUMADMIN_ROLE__', 'forumadmin');
+define('__SUPERADMIN_ROLE__', 'admin');
+
+require_once('inc/skeletome_group.inc');
+require_once('inc/skeletome_util.inc');
+require_once('inc/skeletome_views.inc');
+require_once('inc/skeletome_forum.inc');
+require_once('inc/skeletome_admin.inc');
+
+function skeletome_util_init() {
+  drupal_add_css(drupal_get_path('module', 'skeletome_util') .'/skeletome_tagging.css', array('group' => CSS_DEFAULT, 'every_page' => TRUE));
+  drupal_add_js(drupal_get_path('module', 'skeletome_util') .'/js/skeletome_tagging.js', array('group' => JS_DEFAULT, 'every_page' => TRUE));
+/*
+  module_load_include('inc', 'skeletome_util', 'inc/skeletome_util');
+  module_load_include('inc', 'skeletome_util', 'inc/skeletome_views');
+  module_load_include('inc', 'skeletome_util', 'inc/skeletome_forum');
+  module_load_include('inc', 'skeletome_util', 'inc/skeletome_group');
+*/
+}
+
+function skeletome_util_views_post_render(&$view, &$output, &$cache) {
+  if ($view->name == 'genetic_report_gene_mutations') {
+    $new_output = create_new_gmview_output($output);
+    $output = $new_output;
+  }
+  if ($view->name == 'patient_consent_items') {
+    $new_output = create_new_tableview_output($output, 'consentlist');
+    $output = $new_output;
+  }
+  if ($view->name == 'patient_reference_letters') {
+    $new_output = create_new_tableview_output($output, 'letterslist');
+    $output = $new_output;
+  }
+  if ($view->name == 'patient_diagnosis') {
+    $new_output = create_new_patientdiag_output($output);
+    $output = $new_output;
+  }
+  if ($view->name == 'all_groups') {
+    $new_output = create_new_allgroups_output($output);
+    $output = $new_output;
+  }
+  if ($view->name == 'my_groups') {
+    $new_output = create_new_mygroups_output($output);
+    $output = $new_output;
+  }
+  if (($view->name == 'my_patients_by_group') || ($view->name == 'all_patients_by_group')) {
+    $new_output = create_new_patients_output($output);
+    $output = $new_output;
+  }
+  if (($view->name == 'my_patients_by_case') || ($view->name == 'all_patients_by_case')) {
+    $new_output = create_new_patientsbycase_output($output);
+    $output = $new_output;
+  }
+}
+
+function skeletome_util_views_pre_render(&$view) {
+  if ($view->name == 'all_groups') {
+    $view->result = create_new_allgroups_results($view->result);
+  }
+  if ($view->name == 'my_groups') {
+    $view->result = create_new_mygroups_results($view->result);
+  }
+  if ($view->name == 'my_patients_by_case') {
+    $view->result = create_new_mypatientsbycase_results($view->result);
+  }
+  if ($view->name == 'all_patients_by_case') {
+    $view->result = create_new_allpatients_results($view->result, TRUE);
+  }
+  if ($view->name == 'all_patients_by_group') {
+    $view->result = create_new_allpatients_results($view->result, FALSE);
+  }
+}
+
+function skeletome_util_menu() {
+  $items['skeletome-util/manage-gentags'] = array(
+    'title' => 'Manage generic tags',
+    'page callback' => 'manage_gentags_callback',
+    'type' => MENU_CALLBACK,
+    'access callback' => TRUE,
+  );
+
+  $items['skeletome-util/generic-tags/add'] = array(
+    'title' => 'Add generic tag',
+    'page callback' => 'add_generictag_callback',
+    'type' => MENU_CALLBACK,
+    'access callback' => TRUE,
+  );
+
+  $items['skeletome-util/generic-tags/delete'] = array(
+    'title' => 'Delete generic tags',
+    'page callback' => 'delete_generictag_callback',
+    'type' => MENU_CALLBACK,
+    'access callback' => TRUE,
+  );
+
+  $items['skeletome-util/forum/share'] = array(
+    'title' => 'Share forum discussion',
+    'page callback' => 'share_forum_callback',
+    'type' => MENU_CALLBACK,
+    'access callback' => TRUE,
+  );
+
+  $items['skeletome-util/forum/unshare/%/%'] = array(
+    'title' => 'Unshare forum discussion',
+    'page callback' => 'unshare_forum_callback',
+    'page arguments' => array(3, 4),
+    'type' => MENU_CALLBACK,
+    'access callback' => TRUE,
+  );
+
+  $items['skeletome-util/forum/enable-caseowner/%/%'] = array(
+    'title' => 'Unshare forum discussion',
+    'page callback' => 'enableco_forum_callback',
+    'page arguments' => array(3, 4),
+    'type' => MENU_CALLBACK,
+    'access callback' => TRUE,
+  );
+
+  $items['skeletome-util/forum/disable-caseowner/%'] = array(
+    'title' => 'Unshare forum discussion',
+    'page callback' => 'disableco_forum_callback',
+    'page arguments' => array(3),
+    'type' => MENU_CALLBACK,
+    'access callback' => TRUE,
+  );
+
+  $items['skeletome-util/get-custom-tags'] = array(
+    'title' => 'Get generic tags',
+    'page callback' => 'get_generictags_callback',
+    'type' => MENU_CALLBACK,
+    'access callback' => TRUE,
+  );
+
+  $items['skeletome-util/get-dysplasias'] = array(
+    'title' => 'Get bone dysplasias',
+    'page callback' => 'get_bonedysplasias_callback',
+    'type' => MENU_CALLBACK,
+    'access callback' => TRUE,
+  );
+
+  $items['skeletome-util/get-phenotype'] = array(
+    'title' => 'Get phenotype',
+    'page callback' => 'get_phenotype_callback',
+    'type' => MENU_CALLBACK,
+    'file' => 'skeletome_biblio.inc',
+    'access callback' => TRUE,
+  );
+
+  $items['skeletome-util/get-biblio'] = array(
+    'title' => 'Get biblio',
+    'page callback' => 'get_biblio_callback',
+    'type' => MENU_CALLBACK,
+    'file' => 'skeletome_biblio.inc',
+    'access callback' => TRUE,
+  );
+
+  $items['node/%node/citations'] = array(
+    'title' => 'Citations',
+    'page callback' => 'biblio_citations_callback',
+    'page arguments' => array(1),
+    'type' => MENU_LOCAL_TASK,
+    'file' => 'biblio_citations.inc',
+    'access callback' 	=> 'validate_biblio_cite_callback',
+    'access arguments' 	=> array(1, 'biblio'),
+    'weight' => 2,
+  );
+
+  $items['node/%node/biblio/pheno_citation/delete/%/%/%/%'] = array(
+    'title' => 'Delete pheno citation',
+    'page callback' => 'delete_pheno_biblio_citation_callback',
+    'page arguments' => array(5, 6, 7, 8),
+    'type' => MENU_CALLBACK,
+    'file' => 'biblio_citations.inc',
+    'access callback' => TRUE,
+  );
+
+  $items['node/%node/biblio/gm_citation/delete/%/%'] = array(
+    'title' => 'Delete gm citation',
+    'page callback' => 'delete_gm_biblio_citation_callback',
+    'page arguments' => array(5, 6),
+    'type' => MENU_CALLBACK,
+    'file' => 'biblio_citations.inc',
+    'access callback' => TRUE,
+  );
+
+  return $items;
+}
+
+function validate_biblio_cite_callback($node) {
+  if ($node->type === 'biblio') {
+    if (array_key_exists('und', $node->field_biblio_ssc_field)) {
+      if (!empty($node->field_biblio_ssc_field['und'])) {
+	return TRUE;
+      }
+    }
+  }
+
+  return FALSE;
+}
+
+function is_current_user_forumadmin() {
+  global $user;
+  return in_array(__FORUMADMIN_ROLE__, $user->roles);
+}
+
+function is_current_user_superadmin() {
+  global $user;
+  return in_array(__SUPERADMIN_ROLE__, $user->roles);
+}
+
+function is_current_user_owner($node) {
+  global $user;
+  return $node->uid === $user->uid;
+}
+
+function is_current_user_owner_of_node_type($node, $type) {
+  return is_node_of_type($node, $type) && is_current_user_owner($node);
+}
+
+function is_node_of_type($node, $type) {
+  return $node->type === $type;
+}
+
+function is_user_owner($node_nid, $user_uid) {
+  $owner = -1;
+  $sql = 'SELECT nid, uid FROM {node} n WHERE n.nid = :nid';
+  $result = db_query($sql, array(':nid' => $node_nid));
+  foreach ($result as $row) {
+    $owner = $row->uid;
+  }
+
+  return $owner === $user_uid;
+}
+
+function currentuser_is_member_of($group_nid) {
+  global $user;
+  $user_groups = get_groups_for_entity($user->uid, 'user');
+  $group_gid = get_gid_for_group($group_nid);
+
+  return in_array($group_gid, $user_groups);
+}
+
+function currentuser_has_access($entity_nid) {
+  global $user;
+  $user_groups = get_groups_for_entity($user->uid, 'user');
+  $node_groups = get_groups_for_entity($entity_nid, 'node');
+
+  $membership = array_intersect(array_values($user_groups), array_values($node_groups));
+  $is_member = empty($membership) ? FALSE : TRUE;
+  $entity_node = node_load($entity_nid);
+
+  return $is_member || ($entity_node->uid === $user->uid);
+}
+
+function user_has_access($user, $entity_nid) {
+  $user_groups = get_groups_for_entity($user->uid, 'user');
+  $node_groups = get_groups_for_entity($entity_nid, 'node');
+
+  $membership = array_intersect(array_values($user_groups), array_values($node_groups));
+  $is_member = empty($membership) ? FALSE : TRUE;
+  $entity_node = node_load($entity_nid);
+
+  return $is_member || ($entity_node->uid === $user->uid);
+}
+
+function retrieve_users() {
+  $users = array();
+
+  $sql = 'SELECT uid FROM {users}';
+  $result = db_query($sql, array());
+  foreach ($result as $row) {
+    $users[] = $row->uid;
+  }
+
+  return $users;
+}
+
+function get_owner_for_node($nid) {
+  $sql = 'SELECT nid, uid FROM {node} n WHERE n.nid = :nid';
+  $result = db_query($sql, array(':nid' => $nid));
+  foreach ($result as $row) {
+    return $row->uid;
+  }
+
+  return NULL;
+}
+
+function get_nodes_of_type($type) {
+  $nodes = array();
+  $sql = 'SELECT nid, title FROM {node} n WHERE n.type = :type';
+  $result = db_query($sql, array(':type' => $type));
+  foreach ($result as $row) {
+    $nodes[$row->nid] = $row->title;
+  }
+
+  return $nodes;
+}
+
+function get_nodes_of_type_for_user($type, $uid) {
+  $nodes = array();
+  $sql = 'SELECT nid FROM {node} n WHERE n.type = :type AND n.uid = :uid';
+  $result = db_query($sql, array(':type' => $type, ':uid' => $uid));
+  foreach ($result as $row) {
+    $nodes[] = $row->nid;
+  }
+
+  return $nodes;
+}
+
+function get_nodes_with_tag($tid) {
+  $nids = array();
+  $sql = 'SELECT nid FROM {taxonomy_index} ti WHERE ti.tid = :tid';
+  $result = db_query($sql, array(':tid' => $tid));
+  foreach ($result as $row) {
+    $nids[$row->nid] = $row->nid;
+  }
+
+  return $nids;
+}
+
+function get_scc_for_phenotid($pheno_tid) {
+  $scc_nids = array();
+  $sql = 'SELECT entity_id, field_ssc_phenoterm_tid FROM {field_data_field_ssc_phenoterm} WHERE field_ssc_phenoterm_tid = :pheno_tid';
+  $result = db_query($sql, array(':pheno_tid' => $pheno_tid));
+  foreach ($result as $row) {
+    $scc_nids[] = $row->entity_id;
+  }
+  return $scc_nids;
+}
+
+function get_scc_for_bd($bd_nid) {
+  $scc_nids = array();
+  $sql = 'SELECT entity_id, field_ssc_bonedysplasia_nid FROM {field_data_field_ssc_bonedysplasia} WHERE field_ssc_bonedysplasia_nid = :bd_nid';
+  $result = db_query($sql, array(':bd_nid' => $bd_nid));
+  foreach ($result as $row) {
+    $scc_nids[] = $row->entity_id;
+  }
+  return $scc_nids;
+}
+
+function count_nodes($node_type) {
+  $sql = 'SELECT nid FROM {node} n WHERE n.type = :type';
+  $result = db_query($sql, array(':type' => $node_type));
+
+  $count = 0;
+  foreach ($result as $row) {
+    $count++;
+  }
+
+  return $count;
+}
+
+function count_users() {
+  $sql = 'SELECT uid FROM {users} u';
+  $result = db_query($sql, array());
+
+  $count = 0;
+  foreach ($result as $row) {
+    $count++;
+  }
+
+  return ($count - 1);
+}
+
+function count_tags($vocab_name) {
+  $sql = 'SELECT vid FROM {taxonomy_vocabulary} tv WHERE tv.machine_name = :vocab_name';
+  $result = db_query($sql, array(':vocab_name' => $vocab_name));
+
+  $vid = -1;
+  foreach ($result as $row) {
+    $vid = $row->vid;
+  }
+
+  $sql = 'SELECT vid FROM {taxonomy_term_data} ttd WHERE ttd.vid = :vid';
+  $result = db_query($sql, array(':vid' => $vid));
+  $count = 0;
+  foreach ($result as $row) {
+    $count++;
+  }
+
+  return $count;
+}
+
+function get_vid_for_vocabulary($machine_name) {
+  $sql = 'SELECT vid, machine_name FROM {taxonomy_vocabulary} tv WHERE tv.machine_name = :voc_name';
+  $result = db_query($sql, array(':voc_name' => $machine_name));
+  foreach ($result as $r) {
+    return $r->vid;
+  }
+
+  return NULL;
+}
+
+function get_tags_for_vid($vid) {
+  $tags = array();
+  $sql = 'SELECT tid, name FROM {taxonomy_term_data} t WHERE t.vid = :vid';
+  $result = db_query($sql, array(':vid' => $vid));
+  foreach ($result as $r) {
+    $tags[$r->tid] = $r->name;
+  }
+
+  return $tags;
+}
+
+function remove_from_array($node, $field, $index, $needle, $is_node) {
+  $to_keep = array();
+  $und_array = $node->$field;
+
+  foreach ($und_array['und'] as $item) {
+    if ($item[$index] != $needle) {
+      $to_keep[] = $item;
+    }
+  }
+
+  $und_array['und'] = $to_keep;
+  $node->$field = $und_array;
+  if ($is_node) {
+    node_save($node);
+  } else {
+    taxonomy_term_save($node);
+  }
+}
+
+function find_xray_for_fid($fid) {
+  $sql = 'SELECT entity_id, entity_type, field_xray_media_fid FROM {field_data_field_xray_media} xm WHERE xm.entity_type = :entity_type AND xm.field_xray_media_fid = :fid';
+  $result = db_query($sql, array(':entity_type' => 'node', ':fid' => $fid));
+  $xray_nid = NULL;
+  foreach ($result as $row) {
+    return $row->entity_id;
+  }
+
+  return NULL;
+}

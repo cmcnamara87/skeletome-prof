@@ -1,0 +1,139 @@
+<?php
+// $Id: view_page.module $
+
+function view_page_init() {
+}
+
+function view_page_menu() {
+  $items['node/%node/switch'] = array(
+    'title' => 'Switch view',
+    'page callback' => 'switch_view_callback',
+    'page arguments' => array(1, 'node'),
+    'type' => MENU_CALLBACK,
+    'access callback' => 'is_node_of_type',
+    'access arguments' => array(1, 'view_page'),
+  );
+
+  return $items;
+}
+
+function view_page_node_presave($node) {
+  if ($node->type == 'view_page') {
+  }
+}
+
+function view_page_node_insert($node) {
+  if ($node->type == 'view_page') {
+    if (array_key_exists('und', $node->field_viewpage_url)) {
+      insert_url_alias($node->nid, $node->field_viewpage_url['und'][0]['value']);
+    }    
+  }
+}
+function view_page_node_view($node, $view_mode) {
+  if ($node->type == 'view_page' && $view_mode == 'full' && node_is_page($node)) {
+    if (array_key_exists('und', $node->field_viewpage_viewdetails)) {
+      drupal_add_css(drupal_get_path('module', 'view_page') . '/view_page.css', array('group' => CSS_DEFAULT));
+
+      $views = array();
+      foreach($node->field_viewpage_viewdetails['und'] as $view) {
+
+	$details = explode(':', $view['value']);
+	$new_view['view_name'] = $details[0];
+	$new_view['block_name'] = $details[1];
+	$new_view['title'] = $details[2];
+
+	$views[] = $new_view;
+      }
+      
+      $current = explode(':', $node->field_viewpage_currentview['und'][0]['value']);
+      $current_view['view_name'] = $current[0];
+      $current_view['block_name'] = $current[1];
+      $current_view['title'] = $current[2];
+
+      $header = header_html($views, $current_view);
+
+      $current_view_html = views_embed_view($current_view['view_name'], $current_view['block_name']);
+
+      drupal_add_js(drupal_get_path('module', 'view_page') .'/view_page.js', array('group' => JS_DEFAULT));
+      drupal_add_js(array('currentView' => $node->nid), 'setting');
+
+      $node->content['actual_header'] = array(
+	'#suffix' => $header,
+      );
+
+      $node->content['actual_body'] = array(
+	'#suffix' => $current_view_html,
+      );
+    }
+  }
+}
+
+function header_html($views, $current_view) {
+  $html = '<div style="text-align:right;">';
+
+  $links = array();
+  $view_names = array();
+  foreach ($views as $view) {
+    if ($view['view_name'] !== $current_view['view_name']) {
+      $link = '<a id="' . $view['view_name'] . '" href="javascript:void(0)">' . $view['title'] . '</a>';
+      $links[] = $link;
+      $view_names[] = $view['view_name'];
+    }
+  }
+
+  $html .= 'Browse by ' . $current_view['title'] . ' | ';
+  
+  for ($i = 0; $i < count($links); $i++) {
+    if ($i === (count($links) - 1)) {
+       $html .= $links[$i];
+    } else {
+       $html .= $links[$i] . ' | ';
+    }
+  }
+
+  drupal_add_js(array('views' => $view_names), 'setting');
+
+  $html .= '</div><hr style="border:dashed #CCCCCC; border-width:1px 0 0; height:0;" />';
+  return $html;
+}
+
+function switch_view_callback($view_page_node) {
+  $view_id = $_POST['view_id'];
+
+  $found = NULL;
+  foreach($view_page_node->field_viewpage_viewdetails['und'] as $view) {
+    $details = explode(':', $view['value']);
+    if ($details[0] === $view_id) {
+      $found = $details;
+    }
+  }
+
+  if ($found !== NULL) {
+    $view_page_node->field_viewpage_currentview['und'][0]['value'] = $found[0] . ':' . $found[1] . ':' . $found[2];
+    node_save($view_page_node);
+  }
+
+  exit;
+}
+
+function insert_url_alias($nid, $alias) {
+  $pid = get_latest_pid() + 1;
+  db_insert('url_alias')->fields(array(
+      'pid'	 => $pid,
+      'source'	 => 'node/' . $nid,
+      'alias'	 => $alias,
+      'language' => 'und',
+  ))->execute();
+}
+
+function get_latest_pid() {
+  $pids = array();
+  $sql = 'SELECT pid FROM {url_alias}';
+  $result = db_query($sql, array());
+
+  foreach ($result as $row) {
+    $pids[] = $row->pid;
+  }
+  $max = max($pids);
+  return $max;
+}

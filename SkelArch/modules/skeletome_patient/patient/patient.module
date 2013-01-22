@@ -1,0 +1,625 @@
+<?php
+// $Id: patient.module $
+
+define('__PATIENT_PREFIX__', 'http://skeletome.org/patient/');
+
+function patient_init() {
+  module_load_include('inc', 'patient', 'patient_overview/patient_overview');
+  module_load_include('inc', 'patient', 'patient_cs/patient_cs');
+  module_load_include('inc', 'patient', 'patient_ci/patient_ci');
+  module_load_include('inc', 'patient', 'patient_diag/patient_diag');
+  module_load_include('inc', 'patient', 'patient_notes/patient_notes');
+  module_load_include('inc', 'patient', 'patient_tags/patient_tags');
+  module_load_include('inc', 'patient', 'patient_xray/patient_xray');
+  module_load_include('inc', 'patient', 'patient_genrep/patient_genrep');
+  module_load_include('inc', 'patient', 'patient_sharing/patient_sharing');
+  module_load_include('inc', 'patient', 'patient_consent/patient_consent');
+  module_load_include('inc', 'patient', 'patient_letters/patient_letters');
+
+  drupal_add_js(array('skeletomeBase' => base_path()), 'setting');
+}
+
+function patient_menu() {
+
+  /**
+   * Contact information
+   */
+
+  $items['node/%node/contact-info'] = array(
+    'title' => 'Contact information',
+    'page callback' => 'patient_ci_callback',
+    'page arguments' => array(1, 'node'),
+    'type' => MENU_LOCAL_TASK,
+    'access callback' => 'is_current_user_owner_of_node_type',
+    'access arguments' => array(1, 'patient'),
+    'weight' => 3,
+  );
+
+  $items['node/%node/contact-info/set'] = array(
+    'title' => 'Set contact information',
+    'page callback' => 'set_ci_callback',
+    'page arguments' => array(1, 'node'),
+    'type' => MENU_CALLBACK,
+    'access callback' => 'is_node_of_type',
+    'access arguments' => array(1, 'patient'),
+  );
+
+  /**
+   * Clinical summary
+   */
+
+  $items['node/%node/clinical-summary'] = array(
+    'title' => 'Clinical summary',
+    'page callback' => 'patient_cs_callback',
+    'page arguments' => array(1, 'node'),
+    'type' => MENU_LOCAL_TASK,
+    'access callback' => 'is_node_of_type',
+    'access arguments' => array(1, 'patient'),
+    'weight' => 4,
+  );
+
+  $items['node/%node/clinical-summary/delete'] = array(
+    'title' => 'Delete clinical summary',
+    'page callback' => 'delete_cs_callback',
+    'page arguments' => array(1, 'node'),
+    'type' => MENU_CALLBACK,
+    'access callback' => 'is_node_of_type',
+    'access arguments' => array(1, 'patient'),
+  );
+
+  $items['node/%node/clinical-summary/delete-tag/%'] = array(
+    'title' => 'Delete clinical summary tag',
+    'page callback' => 'delete_cstag_callback',
+    'page arguments' => array(1, 4),
+    'type' => MENU_CALLBACK,
+    'access callback' => 'is_node_of_type',
+    'access arguments' => array(1, 'patient'),
+  );
+
+  /**
+   * X-Ray reports
+   */
+
+  $items['node/%node/xrays'] = array(
+    'title' => 'X-Rays',
+    'page callback' => 'patient_xray_callback',
+    'page arguments' => array(1, 'node'),
+    'type' => MENU_LOCAL_TASK,
+    'access callback' => 'is_node_of_type',
+    'access arguments' => array(1, 'patient'),
+    'weight' => 5,
+  );
+
+  $items['node/%node/xrays/delete/%'] = array(
+    'title' => 'Delete X-Ray report',
+    'page callback' => 'delete_xray_callback',
+    'page arguments' => array(4, 'node'),
+    'type' => MENU_CALLBACK,
+    'access callback' => 'is_current_user_owner_of_node_type',
+    'access arguments' => array(1, 'patient'),
+  );
+
+  $items['node/%node/xrays/delete-tag/%/%/%'] = array(
+    'title' => 'Delete X-Ray tag',
+    'page callback' => 'delete_xraytag_callback',
+    'page arguments' => array(4, 5, 6),
+    'type' => MENU_CALLBACK,
+    'access callback' => 'is_current_user_owner_of_node_type',
+    'access arguments' => array(1, 'patient'),
+  );
+
+  /**
+   * Genetic reports
+   */
+
+  $items['node/%node/genetic-reports'] = array(
+    'title' => 'Genetic reports',
+    'page callback' => 'patient_genrep_callback',
+    'page arguments' => array(1, 'node'),
+    'type' => MENU_LOCAL_TASK,
+    'access callback' => 'is_node_of_type',
+    'access arguments' => array(1, 'patient'),
+    'weight' => 6,
+  );
+
+  $items['node/%node/genetic-reports/delete/%'] = array(
+    'title' => 'Delete genetic report',
+    'page callback' => 'delete_genrep_callback',
+    'page arguments' => array(4, 'node'),
+    'type' => MENU_CALLBACK,
+    'access callback' => 'is_current_user_owner_of_node_type',
+    'access arguments' => array(1, 'patient'),
+  );
+
+  $items['node/%node/genetic-reports/delete-mutation/%'] = array(
+    'title' => 'Delete gene mutation',
+    'page callback' => 'delete_gm_callback',
+    'page arguments' => array(4, 'node'),
+    'type' => MENU_CALLBACK,
+    'access callback' => 'is_current_user_owner_of_node_type',
+    'access arguments' => array(1, 'patient'),
+  );
+
+  /**
+   * Group sharing
+   */
+
+  $items['node/%node/sharing'] = array(
+    'title' => 'Sharing',
+    'page callback' => 'patient_sharing_callback',
+    'page arguments' => array(1, 'node'),
+    'type' => MENU_LOCAL_TASK,
+    'access callback' => 'is_current_user_owner_of_node_type',
+    'access arguments' => array(1, 'patient'),
+    'weight' => 7,
+  );
+
+  $items['patient/share'] = array(
+    'title' => 'Share with groups',
+    'page callback' => 'share_withgroups_callback',
+    'type' => MENU_CALLBACK,
+    'access callback' => TRUE,
+  );
+
+  $items['patient/discuss'] = array(
+    'title' => 'Discuss with groups',
+    'page callback' => 'discuss_withgroups_callback',
+    'type' => MENU_CALLBACK,
+    'access callback' => TRUE,
+  );
+
+  $items['patient/unshare/%/%'] = array(
+    'title' => 'Unshare patient',
+    'page callback' => 'unshare_callback',
+    'page arguments' => array(2, 3),
+    'type' => MENU_CALLBACK,
+    'access callback' => TRUE,
+  );
+
+  $items['patient/undiscuss/%/%'] = array(
+    'title' => 'Remove patient from discussions',
+    'page callback' => 'undiscuss_callback',
+    'page arguments' => array(2, 3),
+    'type' => MENU_CALLBACK,
+    'access callback' => TRUE,
+  );
+
+  /**
+   * Diagnosis
+   */
+
+  $items['node/%node/diagnosis'] = array(
+    'title' => 'Diagnosis',
+    'page callback' => 'patient_diagnosis_callback',
+    'page arguments' => array(1, 'node'),
+    'type' => MENU_LOCAL_TASK,
+    'access callback' => 'is_node_of_type',
+    'access arguments' => array(1, 'patient'),
+    'weight' => 8,
+  );
+
+  $items['node/%node/diagnosis/add/%'] = array(
+    'title' => 'Add diagnosis',
+    'page callback' => 'add_diagnosis_callback',
+    'page arguments' => array(1, 4),
+    'type' => MENU_CALLBACK,
+    'access callback' => 'is_node_of_type',
+    'access arguments' => array(1, 'patient'),
+  );
+
+  $items['node/%node/diagnosis/delete/%'] = array(
+    'title' => 'Delete diagnosis',
+    'page callback' => 'delete_diagnosis_callback',
+    'page arguments' => array(1, 4),
+    'type' => MENU_CALLBACK,
+    'access callback' => 'is_node_of_type',
+    'access arguments' => array(1, 'patient'),
+  );
+
+  $items['node/%node/diagnosis/comment/set'] = array(
+    'title' => 'Set comment',
+    'page callback' => 'set_comment_callback',
+    'page arguments' => array(1),
+    'type' => MENU_CALLBACK,
+    'access callback' => 'is_current_user_owner_of_node_type',
+    'access arguments' => array(1, 'patient'),
+  );
+
+  /**
+   * Consent
+   */
+
+  $items['node/%node/consent'] = array(
+    'title' => 'Consent',
+    'page callback' => 'patient_consent_callback',
+    'page arguments' => array(1, 'node'),
+    'type' => MENU_LOCAL_TASK,
+    'access callback' => 'is_current_user_owner_of_node_type',
+    'access arguments' => array(1, 'patient'),
+    'weight' => 9,
+  );
+
+  $items['node/%node/consent/delete/%'] = array(
+    'title' => 'Delete consent',
+    'page callback' => 'delete_consent_callback',
+    'page arguments' => array(1, 4),
+    'type' => MENU_CALLBACK,
+    'access callback' => 'is_node_of_type',
+    'access arguments' => array(1, 'patient'),
+  );
+
+  /**
+   * Letters
+   */
+
+  $items['node/%node/letters'] = array(
+    'title' => 'Letters',
+    'page callback' => 'patient_letters_callback',
+    'page arguments' => array(1, 'node'),
+    'type' => MENU_LOCAL_TASK,
+    'access callback' => 'is_current_user_owner_of_node_type',
+    'access arguments' => array(1, 'patient'),
+    'weight' => 10,
+  );
+
+  $items['node/%node/letters/delete/%'] = array(
+    'title' => 'Delete letter',
+    'page callback' => 'delete_letter_callback',
+    'page arguments' => array(1, 4),
+    'type' => MENU_CALLBACK,
+    'access callback' => 'is_node_of_type',
+    'access arguments' => array(1, 'patient'),
+  );
+
+  /**
+   * Notes
+   */
+
+  $items['node/%node/notes'] = array(
+    'title' => 'Notes',
+    'page callback' => 'patient_notes_callback',
+    'page arguments' => array(1, 'node'),
+    'type' => MENU_LOCAL_TASK,
+    'access callback' => 'is_node_of_type',
+    'access arguments' => array(1, 'patient'),
+    'weight' => 11,
+  );
+
+  $items['node/%node/notes/add'] = array(
+    'title' => 'Add note',
+    'page callback' => 'add_note_callback',
+    'page arguments' => array(1),
+    'type' => MENU_CALLBACK,
+    'access callback' => 'is_node_of_type',
+    'access arguments' => array(1, 'patient'),
+  );
+
+  $items['node/%node/notes/edit/%'] = array(
+    'title' => 'Edit note',
+    'page callback' => 'edit_note_callback',
+    'page arguments' => array(1, 4),
+    'type' => MENU_CALLBACK,
+    'access callback' => 'is_node_of_type',
+    'access arguments' => array(1, 'patient'),
+  );
+
+  $items['node/%node/notes/update/%'] = array(
+    'title' => 'Update note',
+    'page callback' => 'update_note_callback',
+    'page arguments' => array(1, 4),
+    'type' => MENU_CALLBACK,
+    'access callback' => 'is_node_of_type',
+    'access arguments' => array(1, 'patient'),
+  );
+
+  $items['node/%node/notes/delete/%'] = array(
+    'title' => 'Delete note',
+    'page callback' => 'delete_note_callback',
+    'page arguments' => array(1, 4),
+    'type' => MENU_CALLBACK,
+    'access callback' => 'is_node_of_type',
+    'access arguments' => array(1, 'patient'),
+  );
+
+  /**
+   * Custom tags
+   */
+
+  $items['patient/add-custom-tag'] = array(
+    'title' => 'Add custom tag',
+    'page callback' => 'add_custom_tag_callback',
+    'type' => MENU_CALLBACK,
+    'access callback' => TRUE,
+  );
+
+  $items['patient/delete-custom-tag/%/%'] = array(
+    'title' => 'Delete custom tag',
+    'page callback' => 'delete_custom_tag_callback',
+    'page arguments' => array(2, 3),
+    'type' => MENU_CALLBACK,
+    'access callback' => TRUE,
+  );
+
+  /**
+   * Identifiers
+   */
+
+  $items['patient/add-identifier/%'] = array(
+    'title' => 'Add identifier',
+    'page callback' => 'add_identifier_callback',
+    'page arguments' => array(2),
+    'type' => MENU_CALLBACK,
+    'access callback' => TRUE,
+  );
+
+  $items['patient/delete-identifier/%/%'] = array(
+    'title' => 'Delete identifier',
+    'page callback' => 'delete_identifier_callback',
+    'page arguments' => array(2, 3),
+    'type' => MENU_CALLBACK,
+    'access callback' => TRUE,
+  );
+
+  /**
+   * Other
+   */
+
+  $items['patient/add-patient'] = array(
+    'title' => 'Add patient',
+    'page callback' => 'add_patient_callback',
+    'type' => MENU_CALLBACK,
+    'access callback' => TRUE,
+  );
+
+  $items['patient/delete-patient'] = array(
+    'title' => 'Delete patient',
+    'page callback' => 'delete_patient_callback',
+    'type' => MENU_CALLBACK,
+    'access callback' => TRUE,
+  );
+
+  $items['node/%node/forum-summary/set'] = array(
+    'title' => 'Set forum summary',
+    'page callback' => 'set_forumsummary_callback',
+    'page arguments' => array(1, 'node'),
+    'type' => MENU_CALLBACK,
+    'access callback' => 'is_node_of_type',
+    'access arguments' => array(1, 'patient'),
+  );
+
+  return $items;
+}
+
+function delete_patient_callback() {
+  $patientNid = $_POST['patientNid'];
+  $patient_node = node_load($patientNid);
+  if (is_current_user_owner($patient_node)) {
+    node_delete($patientNid);
+  }
+  exit;
+}
+
+function add_patient_callback() {
+  global $user;
+
+  $patient_node = new stdClass();
+  $patient_node->type = 'patient';
+  $patient_node->language = 'und';
+  $patient_node->title = _generate_id();
+  $patient_node->uid = $user->uid; 
+  $patient_node->group_content_access['und'][0]['value'] = '2';
+  node_save($patient_node);
+
+  $ci_node = new stdClass();
+  $ci_node->type = 'contact_information';
+  $ci_node->language = 'und';
+  $ci_node->title = $patient_node->title;
+  $ci_node->uid = $user->uid;
+  $ci_node->field_ci_patient['und'][0]['nid'] = $patient_node->nid;
+  $ci_node->group_content_access['und'][0]['value'] = '2';
+  node_save($ci_node);
+
+  $patient_node->field_patient_ci['und'][0]['nid'] = $ci_node->nid;
+  node_save($patient_node);
+
+  drupal_goto('node/' . $patient_node->nid);
+}
+
+function validate_diagnosis_access($patient_node) {
+  if (is_current_user_owner_of_node_type($patient_node, 'patient')) {
+    return TRUE;
+  }
+
+  if (is_node_of_type($patient_node, 'patient')) {
+    if (array_key_exists('und', $patient_node->field_patient_diagnosisenabled)) {
+      global $user;
+      $user_groups = get_groups_for_entity($user->uid, 'user');
+      $user_group_nids = get_nids_for_groups($user_groups);
+      
+      foreach ($patient_node->field_patient_diagnosisenabled['und'] as $group) {
+	if (in_array($group['nid'], $user_group_nids)) {
+	  return TRUE;
+	}
+      }
+    }
+  }
+
+  return FALSE;
+}
+
+function patient_node_view($node, $view_mode) {
+  if ($node->type == 'patient' && $view_mode == 'full' && node_is_page($node)) {
+    $overview_html = '';
+    if (is_current_user_owner($node)) {
+      $overview_html = create_owner_overview($node);
+    } else {
+      $overview_html = create_nonowner_overview($node);
+    }
+    $node->content['overview'] = array(
+      '#suffix' => $overview_html,
+    );
+  }
+
+  return $node;
+}
+
+
+function patient_form_patient_node_form_alter(&$form, &$form_state, $form_id) {
+if (isset($form['type']) && isset($form['#node'])) {
+    if ('patient_node_form' == $form_id) {
+      $form['field_patient_diagnosis']['#access'] = FALSE;
+      $form['field_patient_xrayreport']['#access'] = FALSE;
+      $form['field_patient_clinicalsummary']['#access'] = FALSE;
+      $form['field_patient_forum']['#access'] = FALSE;
+      $form['field_patient_uri']['#access'] = FALSE;
+      $form['field_patient_genrep']['#access'] = FALSE;
+      $form['field_skeletome_tags']['#access'] = FALSE;
+      $form['field_entry_date']['#access'] = FALSE;
+      $form['field_patient_note']['#access'] = FALSE;
+      $form['field_patient_customtags']['#access'] = FALSE;
+    }
+  }
+}
+
+function _generate_id() {
+  $sql = 'SELECT nid FROM {node} n WHERE n.type = :type';
+  $result = db_query($sql, array(':type' => 'patient'));
+  $count = 0;
+  foreach ($result as $row) {
+    $count++;
+  }
+  $count++;
+  return 'Case-' . $count;
+}
+
+function patient_node_presave($node) {
+  if ($node->type == 'patient') {
+    if (!property_exists($node, 'nid')) {
+      $node->field_patient_uri['und'][0]['value'] = __PATIENT_PREFIX__ . strtolower($node->title);
+      $date = new DateObject();
+      $node->field_entry_date['und'][0]['value'] = $date->format(DATE_FORMAT_ISO);
+      $node->field_entry_date['und'][0]['value2'] = $date->format(DATE_FORMAT_ISO);
+    }
+  }
+}
+
+function patient_node_insert($node) {
+  if ($node->type == 'patient') {
+  }
+}
+
+function _find_patients_forum() {
+  $sql = 'SELECT tid FROM {taxonomy_term_data} n WHERE n.name = :name';
+  $result = db_query($sql, array(':name' => 'Patient discussions'));
+  $tids = array();
+  foreach ($result as $row) {
+    $tids[] = $row->tid;
+  }
+
+  if (!empty($tids)) {
+    return $tids[0];
+  } else {
+    return NULL;
+  }
+}
+
+function patient_node_delete($node) {
+  if ($node->type == 'patient') {
+
+    // Contact information
+    $ci_nid = $node->field_patient_ci['und'][0]['nid'];
+    node_delete($ci_nid);
+
+    // Clinical summary
+    if (array_key_exists('und', $node->field_patient_clinicalsummary)) {
+      $cs_nid = $node->field_patient_clinicalsummary['und'][0]['nid'];
+      node_delete($cs_nid);
+    }
+
+    // X-Rays
+    if (array_key_exists('und', $node->field_patient_xrayreport)) {
+      foreach ($node->field_patient_xrayreport['und'] as $xray) {
+	node_delete($xray['nid']);
+      }
+    }
+
+    // Genetic reports
+    if (array_key_exists('und', $node->field_patient_genrep)) {
+      foreach ($node->field_patient_genrep['und'] as $genrep) {
+	node_delete($genrep['nid']);
+      }
+    }
+
+    // Notes
+    if (array_key_exists('und', $node->field_patient_note)) {
+      foreach ($node->field_patient_note['und'] as $note) {
+	node_delete($note['nid']);
+      }
+    }
+
+    // Diagnoses
+    if (array_key_exists('und', $node->field_patient_diagnosis)) {
+      foreach ($node->field_patient_diagnosis['und'] as $diag) {
+	node_delete($diag['nid']);
+      }
+    }
+
+    // Consent items
+    if (array_key_exists('und', $node->field_patient_consent)) {
+      foreach ($node->field_patient_consent['und'] as $consent) {
+	node_delete($consent['nid']);
+      }
+    }
+
+    // Reference letters
+    if (array_key_exists('und', $node->field_patient_letter)) {
+      foreach ($node->field_patient_letter['und'] as $letter) {
+	node_delete($letter['nid']);
+      }
+    }
+
+    // Forum entries - undiscuss
+    if (array_key_exists('und', $node->field_patient_discussiongroups)) {
+      $patient_topics = get_forumtopics_for_patient($node->nid);
+      foreach ($node->field_patient_discussiongroups['und'] as $group) {
+	undiscuss_with_group($patient_topics, $group['nid']);
+      }
+    }
+
+  // Forum summaries - delete
+    $forum_summaries = get_forumsummary_for_patient($node->nid);
+    foreach ($forum_summaries as $fs_nid) {
+      node_delete($fs_nid);
+    }
+
+  }
+}
+
+function patient_node_access($node, $op, $account) {
+  $type = is_string($node) ? $node : $node->type;
+
+  if ($type === 'patient') {
+    if (arg(0) == 'node') {
+      if (arg(1) != NULL) {
+	if (is_numeric(arg(1))) {
+	  $node_node = node_load(arg(1));
+	  if ($node_node->uid !== $account->uid) {
+	    if (!currentuser_has_access($node_node->nid)) {
+	      return NODE_ACCESS_DENY;
+	    }
+	  }
+	}
+      }
+    }
+  }
+}
+
+/*
+$ac_groups = get_groups_for_entity($account->uid, 'user');
+$node_groups = get_groups_for_entity($node_node->nid, 'node');
+$membership = array_intersect(array_values($ac_groups), array_values($node_groups));
+$is_member = empty($membership) ? FALSE : TRUE;
+if (!$is_member) {
+  return NODE_ACCESS_DENY;
+}
+*/

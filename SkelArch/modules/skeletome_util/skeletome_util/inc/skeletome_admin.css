@@ -1,0 +1,38 @@
+
+#tag_input { 
+  width: 32em; 
+}
+
+#feedback { font-size: 1.4em; }
+	#selectable .ui-selecting { background: #ab8da2; }
+	#selectable .ui-selected { background: #9e2e7e; color: white; }
+	#selectable { list-style-type: none; margin: 0; padding: 0; width: 100%; }
+	#selectable li { margin: 3px; padding: 0.4em; font-size: 1.4em; height: 18px; }
+
+
+#box-table
+{
+	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+	font-size: 12px;
+	width: 450px;
+	text-align: center;
+	border-collapse: collapse;
+	border-top: 3px solid #b8b8b8;
+	border-bottom: 3px solid #b8b8b8;
+}
+#box-table td
+{
+	padding: 5px;
+	background: #e8edff; 
+	border-right: 1px solid #b8b8b8;
+	border-left: 1px solid #b8b8b8;
+}
+
+#create_tag_button {
+	margin-bottom: 5px;
+}
+
+span.killer {
+    float: right;
+    margin-right: -9em;
+}

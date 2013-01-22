@@ -1,0 +1,46 @@
+<?php
+// $Id: generic_tags_vocabulary.install $
+
+function generic_tags_vocabulary_install() {
+  drupal_load('module', 'taxonomy.module');
+
+  $vocab = (object) array(
+    'name' => 'SKELETOME Generic Tags vocabulary', // The name of our vocabulary
+    'machine_name' => 'generic_tags_vocabulary',
+    'description' => t('The SKELETOME Generic Tags vocabulary'), // A description of the vocabulary
+    'hierarchy' => 0, // allows hierarchy of terms
+    'module' => 'generic_tags_vocabulary',
+    'weight' => 0, // the weight of the vocabulary in the list
+  );
+
+  taxonomy_vocabulary_save($vocab);
+}
+
+function generic_tags_vocabulary_uninstall() {
+  $sql = 'SELECT vid FROM {taxonomy_vocabulary} v WHERE v.machine_name = :machine_name';
+  $result = db_query($sql, array(':machine_name' => 'generic_tags_vocabulary'));
+  $vid = array();
+  foreach ($result as $row) {
+    $vid = $row->vid;
+  }
+
+  $sql = 'SELECT tid FROM {taxonomy_term_data} t WHERE t.vid = :vid';
+  $result = db_query($sql, array(':vid' => $vid));
+  $tids = array();
+  foreach ($result as $row) {
+    $tids[] = $row->tid;
+  }
+
+  foreach ($tids as $tid) {
+    taxonomy_term_delete($tid);
+  }
+
+  $instances = field_info_instances('taxonomy_term', 'generic_tags_vocabulary');
+  foreach ($instances as $instance_name => $instance) {
+    field_delete_instance($instance);
+  }
+
+  taxonomy_vocabulary_delete($vid);
+
+  field_purge_batch(1000);
+}

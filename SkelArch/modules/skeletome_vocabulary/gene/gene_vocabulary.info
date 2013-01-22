@@ -1,0 +1,11 @@
+; $Id: gene_vocabulary.info $
+
+name = SKELETOME Gene vocabulary
+description = Provides the implementation for the SKELETOME Gene vocabulary.
+package = SKELETOME Vocabulary
+
+core = 7.x
+dependencies[] = taxonomy
+
+files[] = gene_vocabulary.module
+files[] = gene_vocabulary.install

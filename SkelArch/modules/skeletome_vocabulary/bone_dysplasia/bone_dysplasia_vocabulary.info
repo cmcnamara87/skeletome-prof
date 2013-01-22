@@ -1,0 +1,11 @@
+; $Id: bone_dysplasia_vocabulary.info $
+
+name = SKELETOME Bone Dysplasia vocabulary
+description = Provides the implementation for the SKELETOME Bone Dysplasia vocabulary.
+package = SKELETOME Vocabulary
+
+core = 7.x
+dependencies[] = taxonomy
+
+files[] = bone_dysplasia_vocabulary.module
+files[] = bone_dysplasia_vocabulary.install

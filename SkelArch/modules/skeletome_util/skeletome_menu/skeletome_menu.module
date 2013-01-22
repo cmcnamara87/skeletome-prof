@@ -1,0 +1,271 @@
+<?php
+
+function skeletome_menu_menu() {
+  variable_set('menu_secondary_links_source', 'main-menu');
+
+// HOME
+
+  $items['skeletome-home'] = array(
+    'title' => 'Home',
+    'menu_name' => 'main-menu',
+    'access callback' => 'user_is_logged_in',
+    'page callback' => '_skeletome_home_menu',
+    'expanded' => TRUE,
+  );
+
+// PATIENTS
+
+  $items['skeletome-patient'] = array(
+    'title' => 'Patients',
+    'menu_name' => 'main-menu',
+    'access callback' => 'user_is_logged_in',
+    'page callback' => '_skeletome_patient_menu',
+    'expanded' => TRUE,
+  );
+
+  $items['skeletome-patient/patients'] = array(
+    'title' => 'View all patients',
+    'access callback' => 'user_is_logged_in',
+    'page callback' => '_skeletome_patient_patients_menu',
+  );
+
+  $items['skeletome-patient/mypatients'] = array(
+    'title' => 'View my Patients',
+    'access callback' => 'user_is_logged_in',
+    'page callback' => '_skeletome_patient_mypatients_menu',
+  );
+
+  $items['skeletome-patient/add-patient'] = array(
+    'title' => 'Add a new patient',
+    'access callback' => 'user_is_logged_in',
+    'page callback' => '_skeletome_patient_addpatient_menu',
+ );
+
+// GROUPS
+
+  $items['skeletome-groups'] = array(
+    'title' => 'Groups',
+    'menu_name' => 'main-menu',
+    'access callback' => 'user_is_logged_in',
+    'page callback' => '_skeletome_group_menu',
+    'expanded' => TRUE,
+  );
+
+  $items['skeletome-groups/allgroups'] = array(
+    'title' => 'View all groups',
+    'access callback' => 'user_is_logged_in',
+    'page callback' => '_skeletome_groups_allgroups_menu',
+  );
+
+  $items['skeletome-groups/mygroups'] = array(
+    'title' => 'View my groups',
+    'access callback' => 'user_is_logged_in',
+    'page callback' => '_skeletome_groups_mygroups_menu',
+  );
+
+  $items['skeletome-groups/creategroup'] = array(
+    'title' => 'Create a new group',
+    'access callback' => 'is_current_user_superadmin',
+    'page callback' => '_skeletome_groups_creategroup_menu',
+  );
+
+// FORUM
+
+  $items['skeletome-forum'] = array(
+    'title' => 'Discussions',
+    'menu_name' => 'main-menu',
+    'access callback' => 'user_is_logged_in',
+    'page callback' => '_skeletome_forum_menu',
+    'expanded' => TRUE,
+  );
+
+  $items['skeletome-forum/forum'] = array(
+    'title' => 'View discussion forum',
+    'access callback' => 'user_is_logged_in',
+    'page callback' => '_skeletome_forum_forum_menu',
+  );
+
+  $items['skeletome-forum/add-forumtopic'] = array(
+    'title' => 'Start a new discussion',
+    'access callback' => 'user_is_logged_in',
+    'page callback' => '_skeletome_forum_add_forumtopic_menu',
+ );
+
+  $items['skeletome-forum/admin-forum'] = array(
+    'title' => 'Manage discussion forum',
+    'access callback' => 'is_current_user_forumadmin',
+    'page callback' => '_skeletome_forum_admin_forum_menu',
+ );
+
+// BIBLIO
+/*
+  $items['skeletome-biblio'] = array(
+    'title' => 'Biblio',
+    'menu_name' => 'main-menu',
+    'access callback' => 'user_is_logged_in',
+    'page callback' => '_skeletome_biblio_menu',
+    'expanded' => TRUE,
+  );
+
+  $items['skeletome-biblio/biblio'] = array(
+    'title' => 'Browse biblio',
+    'access callback' => 'user_is_logged_in',
+    'page callback' => '_skeletome_biblio_biblio_menu',
+ );
+
+  $items['skeletome-biblio/add-biblio'] = array(
+    'title' => 'Add biblio item',
+    'access callback' => 'user_is_logged_in',
+    'page callback' => '_skeletome_biblio_add_biblio_menu',
+ );
+*/
+// TOOLS
+
+  $items['skeletome-tools'] = array(
+    'title' => 'Tools',
+    'menu_name' => 'main-menu',
+    'access callback' => 'user_is_logged_in',
+    'page callback' => '_skeletome_tools_menu',
+    'expanded' => TRUE,
+  );
+
+  $items['skeletome-tools/search'] = array(
+    'title' => 'Search',
+    'access callback' => 'user_is_logged_in',
+    'page callback' => '_skeletome_tools_search_menu',
+ );
+
+  $items['skeletome-tools/add-newsitem'] = array(
+    'title' => 'Add news item',
+    'access callback' => 'user_is_logged_in',
+    'page callback' => '_skeletome_tools_add_newsitem_menu',
+ );
+
+  $items['skeletome-tools/admin-people'] = array(
+    'title' => 'Manage users',
+    'access callback' => 'is_current_user_superadmin',
+    'page callback' => '_skeletome_tools_admin_people_menu',
+ );
+
+  $items['skeletome-tools/manage-gentags'] = array(
+    'title' => 'Manage generic tags',
+    'access callback' => 'is_current_user_superadmin',
+    'page callback' => '_skeletome_tools_manage_gentags_menu',
+ );
+
+// INFO
+
+  $items['skeletome-contact'] = array(
+    'title' => 'Contact',
+    'menu_name' => 'menu-information',
+    'access callback' => TRUE,
+    'page callback' => '_skeletome_contact_menu',
+    'file' => 'skeletome_contact_menu_page.inc'
+  );
+
+  $items['skeletome-statistics'] = array(
+    'title' => 'Statistics',
+    'menu_name' => 'menu-information',
+    'access callback' => TRUE,
+    'page callback' => '_skeletome_statistics_menu',
+    'file' => 'skeletome_statistics_menu_page.inc'
+  );
+
+  return $items;
+}
+
+// HOME
+
+function _skeletome_home_menu() {
+  drupal_goto('<front>');
+}
+
+// PATIENTS
+
+function _skeletome_patient_menu() {
+  drupal_goto('<front>');
+}
+
+function _skeletome_patient_patients_menu() {
+  drupal_goto('patients');
+}
+
+function _skeletome_patient_mypatients_menu() {
+  drupal_goto('mypatients');
+}
+
+function _skeletome_patient_addpatient_menu() {
+  drupal_goto('patient/add-patient');
+}
+
+// GROUPS
+
+function _skeletome_group_menu() {
+  drupal_goto('<front>');
+}
+
+function _skeletome_groups_allgroups_menu() {
+  drupal_goto('allgroups');
+}
+
+function _skeletome_groups_mygroups_menu() {
+  drupal_goto('mygroups');
+}
+
+function _skeletome_groups_creategroup_menu() {
+  drupal_goto('node/add/skeletome-group');
+}
+
+// FORUM
+
+function _skeletome_forum_menu() {
+  drupal_goto('<front>');
+}
+
+function _skeletome_forum_forum_menu() {
+  return drupal_goto('forum');
+}
+
+function _skeletome_forum_add_forumtopic_menu() {
+  return drupal_goto('node/add/forum');
+}
+
+function _skeletome_forum_admin_forum_menu() {
+  return drupal_goto('admin/structure/forum');
+}
+
+// BIBLIO
+/*
+function _skeletome_biblio_menu() {
+  drupal_goto('<front>');
+}
+
+function _skeletome_biblio_biblio_menu() {
+  return drupal_goto('biblio');
+}
+
+function _skeletome_biblio_add_biblio_menu() {
+  return drupal_goto('node/add/biblio');
+}
+*/
+// TOOLS
+
+function _skeletome_tools_menu() {
+  drupal_goto('<front>');
+}
+
+function _skeletome_tools_search_menu() {
+  return drupal_goto('search');
+}
+
+function _skeletome_tools_add_newsitem_menu() {
+  return drupal_goto('node/add/news-item');
+}
+
+function _skeletome_tools_admin_people_menu() {
+  return drupal_goto('admin/people');
+}
+
+function _skeletome_tools_manage_gentags_menu() {
+  return drupal_goto('skeletome-util/manage-gentags');
+}

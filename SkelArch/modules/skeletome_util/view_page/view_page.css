@@ -1,0 +1,10 @@
+#navlist {
+  padding: 0;
+  margin: 0;
+}
+
+#navlist li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}

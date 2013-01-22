@@ -1,0 +1,10 @@
+; $Id: view_page.info $
+
+name = View page
+description = Provides the implementation for the View page content type.
+package = SKELETOME Utilities
+
+core = 7.x
+
+files[] = view_page.module
+files[] = view_page.install

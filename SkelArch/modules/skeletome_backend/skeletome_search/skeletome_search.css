@@ -1,0 +1,32 @@
+.pt-term-list {
+  padding: 5px 0;
+}
+
+.pt-term {
+  background-color:#e7e7e7;
+  padding:2px;
+  display:inline;
+  margin:2px;
+  cursor:pointer;
+  border-color: #aaaaae;
+  border-style: solid;
+  border-width: thin;
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
+  -khtml-border-radius: 8px;
+  border-radius: 8px;
+}
+
+.pt-term-action-remove {
+  color:red;
+  padding-left:5px;
+}
+
+.pt-term-entry {
+  width: 300px;
+  float: left;
+}
+
+.pt-add-btn {
+  margin: 0 10px;
+}

@@ -1,0 +1,11 @@
+; $Id: generic_tags_vocabulary.info $
+
+name = SKELETOME Generic Tags vocabulary
+description = Provides the implementation for the SKELETOME Generic Tags vocabulary.
+package = SKELETOME Vocabulary
+
+core = 7.x
+dependencies[] = taxonomy
+
+files[] = generic_tags_vocabulary.module
+files[] = generic_tags_vocabulary.install
